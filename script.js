@@ -35,3 +35,12 @@
         // a function that modifies (sets) the value of the space passed to it with a given value (parameters are the row and col indicies and the given value)
     // Pass out: gameboard object
 // Endfunction
+
+// Factory Function createPlayer
+    // Pass in: name
+    // Create an object to represent a player, whose properties are:
+        // a name
+        // a representing value (0 or a 1)
+        // a function that accesses the gameboard object, more specifically any grid space, using indices for its row and col, and modifies its value with the player obj's representing value
+    // Pass out: player obj
+// Endfunction
