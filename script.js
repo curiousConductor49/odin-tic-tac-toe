@@ -4,7 +4,6 @@
     // Pass in: n/a
     // Create a single instance of an object to represent the gameboard, whose properties are:
         // ✓ the grid itself, a 2D array with 3 rows and 3 columns
-        // a function that reads (gets) the values of the entire gameboard (likely use a nested loop over the rows and cols)
         // ✓ a function that reads (gets) the value of the specific space passed to it (parameters are the row and col indices)
         // ✓ a function that modifies (sets) the value of the space passed to it with a given value (parameters are the row and col indicies and the given value)
     // Pass out: gameboard object
