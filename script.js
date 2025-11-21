@@ -31,6 +31,18 @@ const gameBoard = (function() {
     // Pass out: player obj
 // Endfunction
 
+function createPlayer(name, mark) {
+    const playerName = name;
+    const playerMark = mark;
+
+    const setPlayerMark = (rowIndex, colIndex) => gameBoard.setGridSpaceVal(rowIndex, colIndex, playerMark);
+
+    return { playerName, playerMark, setPlayerMark };
+}
+
+// console.log(createPlayer("John", 0));
+// console.log(gameBoard);
+
 // IIFE Function game logic controller (module pattern)
     // Pass in: n/a
     // Store the player instances (accessible via closure)
