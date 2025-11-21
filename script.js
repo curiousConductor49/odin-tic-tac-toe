@@ -10,6 +10,18 @@
     // Pass out: gameboard object
 // Endfunction
 
+const gameBoard = (function() {
+    const grid = [
+        [[], [], []],
+        [[], [], []], 
+        [[], [], []]
+    ];
+    const getGridSpaceVal = (rowIndex, colIndex) => grid[rowIndex][colIndex];
+    const setGridSpaceVal = (rowIndex, colIndex, gridSpaceVal) => grid[rowIndex][colIndex] = gridSpaceVal;
+
+    return { grid, getGridSpaceVal, setGridSpaceVal };
+})()
+
 // Factory Function create player
     // Pass in: name
     // Create an object to represent a player, whose properties are:
