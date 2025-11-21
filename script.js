@@ -57,8 +57,8 @@ function createPlayer(selectedName, selectedMark) {
 // Endfunction
 
 const gameLogicController = (function() {
-    const playerOne = createPlayer();
-    const playerTwo = createPlayer();
+    const playerOne = (selectedName, selectedMark) => createPlayer(selectedName, selectedMark);
+    const playerTwo = (selectedName, selectedMark) => createPlayer(selectedName, selectedMark);
 
     // need to figure out how to designate the current player whose turn it is to make a move, we can then pass this returned value to makeCurrentPlayerMove
 
