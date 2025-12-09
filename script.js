@@ -46,8 +46,8 @@ function createPlayer(selectedName, selectedMark) {
     // Pass in: n/a
     // ✓ Store the player instances (accessible via closure)
     // Create an object that keeps track of the game flow and logic, whose properties are:
-        // ✓ a function to record when a player makes a move (i.e. when a player obj instance calls a method to change a grid space), where the player made it (get the gameboard obj space indices from the move), and which player made the move (get player obj instance's name and value)
-        // a function to handle turn changes aka designate which player is currently active and which is not
+        // ✓ a function to handle turn changes aka designate which player is currently active and which is not
+        // ✓ a function to record when a player makes a move (i.e. when a player obj instance calls a method to change a grid space)
         // a function to determine winning conditions (likely returns a boolean value)
         // a function to determine tying conditions i.e. gameboard spaces are full but no winning conditions are true
         // a function to designate a player as a winner (need to examine gameboard obj's rows and cols, probably with a loop, and check for which player the 3 straight values belong to)
@@ -60,8 +60,18 @@ const gameLogicController = (function() {
     const playerOne = (selectedName, selectedMark) => createPlayer(selectedName, selectedMark);
     const playerTwo = (selectedName, selectedMark) => createPlayer(selectedName, selectedMark);
 
-    // need to figure out how to designate the current player whose turn it is to make a move, we can then pass this returned value to makeCurrentPlayerMove
+    const setActivePlayer = (firstPlayer, secondPlayer) => {
+        const players = [firstPlayer, secondPlayer];
+        const randomIndex = Math.floor(Math.random() * 1 + 1);
+        const startingPlayer = players[randomIndex];
+        const activePlayer = startingPlayer === firstPlayer ? secondPlayer : firstPlayer;
+        
+        return activePlayer;
+    };
 
-    const makeCurrentPlayerMove = (currentPlayer) => currentPlayer.setPlayerMark();
+    const makeActivePlayerMove = () => {
+        const currentPlayer = setActivePlayer(playerOne, playerTwo);
+        currentPlayer.setPlayerMark();
+    };
 
 })()
