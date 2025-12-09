@@ -62,7 +62,7 @@ const gameLogicController = (function() {
 
     const setActivePlayer = (firstPlayer, secondPlayer) => {
         const players = [firstPlayer, secondPlayer];
-        const randomIndex = Math.floor(Math.random() * 1 + 1);
+        const randomIndex = Math.floor(Math.random() * 2 + 0);
         const startingPlayer = players[randomIndex];
         const activePlayer = startingPlayer === firstPlayer ? secondPlayer : firstPlayer;
         
