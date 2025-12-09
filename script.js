@@ -74,4 +74,9 @@ const gameLogicController = (function() {
         currentPlayer.setPlayerMark();
     };
 
+    // loop through the gameboard grid and check the values of each space
+    // if an active player's mark appears in a subsequent row or diagonal, then designate the player as a winner (separate function)
+    const checkWinningConditions = () => {};
+    const declareGameWinner = () => {};
+
 })()
