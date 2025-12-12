@@ -108,7 +108,10 @@ const gameLogicController = (function() {
 
         // *** WE ARE HERE!!! ***
         // diagonal win check
-
+        // no need for a loop
+        // should be run after the straight win check
+        // 2 win cases: check the grid spaces of [0][0], [1][1], [0,2], and then [2,0], [1,1], and [0,2]
+        
     };
 
     // if an active player's mark appears in a subsequent row or diagonal, then designate the player as a winner (call this inside checkWinningConditions())
