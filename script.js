@@ -11,9 +11,9 @@
 
 const gameBoard = (function() {
     const grid = [
-        [[], [], []],
-        [[], [], []], 
-        [[], [], []]
+        [[1], [0], [1]],
+        [[1], [1], [0]], 
+        [[1], [0], [1]]
     ];
     const getGridSpaceVal = (rowIndex, colIndex) => grid[rowIndex][colIndex];
     const setGridSpaceVal = (rowIndex, colIndex, gridSpaceVal) => grid[rowIndex][colIndex] = gridSpaceVal;
@@ -74,40 +74,47 @@ const gameLogicController = (function() {
         currentPlayer.setPlayerMark();
     };
 
-    // *** WE ARE HERE!!! ***
-    // loop through the gameboard grid and check the values of each space
-    // store the loop in a function that takes two parameters, rows and cols, which can then be assigned as the values for the outer and inner loop
-    // this way the loops don't have to be fully written out twice; just call the function
-        // loop over rows (outer) and cols (inner), then cols (outer) and rows inner
-        // for each outer loop, add the inner loop's mark values to an array and check if a win (every val is the same) is found
-        // if so, exit, else keep going
-    const checkWinningConditions = () => {
+    // call w/ horizontal parameter first, then w/ vertical if a winner hasn't been found
+    const checkWinningConditions = (loopDirection) => {
         let consecutiveMarks = [];
 
-        const loopOverGameBoardGrid = (loopDirection) => {
-            for (let outerLoopIndex = 0; outerLoopIndex < gameBoard.grid.length; outerLoopIndex++) {    
-                for (let innerLoopIndex = 0; innerLoopIndex < gameBoard.grid[outerLoopIndex].length; innerLoopIndex++) {
-                    if (loopDirection === "horizontal") {
-                        consecutiveMarks.push(gameBoard.getGridSpaceVal(outerLoopIndex, innerLoopIndex));
-                    } else if (loopDirection === "vertical") {
-                        consecutiveMarks.push(gameBoard.getGridSpaceVal(innerLoopIndex, outerLoopIndex));
-                    }
+        // straight win check
+        for (let outerLoopIndex = 0; outerLoopIndex < gameBoard.grid.length; outerLoopIndex++) {    
+            for (let innerLoopIndex = 0; innerLoopIndex < gameBoard.grid[outerLoopIndex].length; innerLoopIndex++) {
+                if (loopDirection === "horizontal") {
+                    consecutiveMarks.push(...gameBoard.getGridSpaceVal(outerLoopIndex, innerLoopIndex));
+                } else if (loopDirection === "vertical") {
+                    consecutiveMarks.push(...gameBoard.getGridSpaceVal(innerLoopIndex, outerLoopIndex));
                 }
-                if (consecutiveMarks.every((mark) => mark === setActivePlayer(playerOne, playerTwo))) {
-                    return `Player ${setActivePlayer(playerOne, playerTwo)} has won!`;
-                } else {
-                    consecutiveMarks = [];
-                }
-            };
-        }
+            }
 
-        return { loopOverGameBoardGrid };
+            if (consecutiveMarks.every((mark) => mark === setActivePlayer(playerOne, playerTwo))) {
+                return `Player ${setActivePlayer(playerOne, playerTwo)} has won!`;
+            } else {
+                consecutiveMarks = [];
+                continue;
+            }
+
+            // console.log(consecutiveMarks);
+            // if (consecutiveMarks.every((mark) => mark === 1)) {
+            //     // return `Player ${setActivePlayer(playerOne, playerTwo)} has won!`;
+            //     console.log("A winner!");
+            //     break;
+            // } else {
+            //     consecutiveMarks = [];
+            //     continue;
+            // }
+        };
+
+        // *** WE ARE HERE!!! ***
+        // diagonal win check
+
     };
 
     // if an active player's mark appears in a subsequent row or diagonal, then designate the player as a winner (call this inside checkWinningConditions())
     const declareGameWinner = () => {};
 
-    // return { checkWinningConditions };
+    return { checkWinningConditions };
 })()
 
-// console.log(gameLogicController.checkWinningConditions());
+console.log(gameLogicController.checkWinningConditions("vertical"));
