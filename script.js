@@ -50,7 +50,6 @@ function createPlayer(selectedName, selectedMark) {
         // ✓ a function to record when a player makes a move (i.e. when a player obj instance calls a method to change a grid space)
         // ✓ a function to determine winning conditions (likely returns a boolean value)
         // a function to determine tying conditions i.e. gameboard spaces are full but no winning conditions are true
-        // a function to designate a player as a winner (need to examine gameboard obj's rows and cols, probably with a loop, and check for which player the 3 straight values belong to)
         // a function to end a game round
         // a function to begin a new game round (should set the gameboard spaces back to empty rows and cols, delete the player objs?)
     // Pass out: n/a
