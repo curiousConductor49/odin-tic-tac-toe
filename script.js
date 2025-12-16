@@ -77,6 +77,7 @@ const gameLogicController = (function() {
     // call w/ horizontal parameter first, then w/ vertical if a winner hasn't been found
     const checkWinningConditions = (loopDirection) => {
         let consecutiveMarks = [];
+        let isThereAGameWin = false;
 
         // straight win check
         for (let outerLoopIndex = 0; outerLoopIndex < gameBoard.grid.length; outerLoopIndex++) {    
@@ -88,7 +89,8 @@ const gameLogicController = (function() {
                 }
             }
 
-            if (consecutiveMarks.every((mark) => mark === setActivePlayer(playerOne, playerTwo))) {
+            if (consecutiveMarks.every((mark) => mark === setActivePlayer(playerOne, playerTwo).playerMark)) {
+                isThereAGameWin = true;
                 return `Player ${setActivePlayer(playerOne, playerTwo)} has won!`;
             } else {
                 consecutiveMarks = [];
@@ -96,23 +98,16 @@ const gameLogicController = (function() {
             }
 
             // console.log(consecutiveMarks);
-            // if (consecutiveMarks.every((mark) => mark === 1)) {
-            //     // return `Player ${setActivePlayer(playerOne, playerTwo)} has won!`;
-            //     console.log("A winner!");
-            //     break;
-            // } else {
-            //     consecutiveMarks = [];
-            //     continue;
-            // }
         };
 
         // diagonal win check
-        if (consecutiveMarks.length === 0) {
+        if (isThereAGameWin === false) {
             consecutiveMarks.push(...gameBoard.getGridSpaceVal(0, 0));
             consecutiveMarks.push(...gameBoard.getGridSpaceVal(1, 1));
             consecutiveMarks.push(...gameBoard.getGridSpaceVal(2, 2));
 
-            if (consecutiveMarks.every((mark) => mark === 1)) {
+            if (consecutiveMarks.every((mark) => mark === setActivePlayer(playerOne, playerTwo).playerMark)) {
+                isThereAGameWin = true;
                 return `Player ${setActivePlayer(playerOne, playerTwo)} has won!`;
                 // console.log("A winner!");
                 // return;
@@ -122,15 +117,14 @@ const gameLogicController = (function() {
                 consecutiveMarks.push(...gameBoard.getGridSpaceVal(1, 1));
                 consecutiveMarks.push(...gameBoard.getGridSpaceVal(2, 0));
 
-                if (consecutiveMarks.every((mark) => mark === 1)) {
+                if (consecutiveMarks.every((mark) => mark === setActivePlayer(playerOne, playerTwo).playerMark)) {
+                    isThereAGameWin = true;
                     return `Player ${setActivePlayer(playerOne, playerTwo)} has won!`;
                     // console.log("A winner!");
                     // return;
                 }
             }
         }
-
-        
     };
     // *** WE ARE HERE!!! ***
 
