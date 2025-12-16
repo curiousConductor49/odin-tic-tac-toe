@@ -110,7 +110,7 @@ const gameLogicController = (function() {
         // diagonal win check
         // no need for a loop
         // should be run after the straight win check
-        // 2 win cases: check the grid spaces of [0][0], [1][1], [0,2], and then [2,0], [1,1], and [0,2]
+        // 2 win cases: check the grid spaces of [0][0], [1][1], [2,2], and then [2,0], [1,1], and [0,2]
         
     };
 
