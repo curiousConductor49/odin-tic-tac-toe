@@ -48,7 +48,7 @@ function createPlayer(selectedName, selectedMark) {
     // Create an object that keeps track of the game flow and logic, whose properties are:
         // ✓ a function to handle turn changes aka designate which player is currently active and which is not
         // ✓ a function to record when a player makes a move (i.e. when a player obj instance calls a method to change a grid space)
-        // a function to determine winning conditions (likely returns a boolean value)
+        // ✓ a function to determine winning conditions (likely returns a boolean value)
         // a function to determine tying conditions i.e. gameboard spaces are full but no winning conditions are true
         // a function to designate a player as a winner (need to examine gameboard obj's rows and cols, probably with a loop, and check for which player the 3 straight values belong to)
         // a function to end a game round
@@ -59,23 +59,18 @@ function createPlayer(selectedName, selectedMark) {
 const gameLogicController = (function() {
     const playerOne = (selectedName, selectedMark) => createPlayer(selectedName, selectedMark);
     const playerTwo = (selectedName, selectedMark) => createPlayer(selectedName, selectedMark);
+    const players = [playerOne, playerTwo];
+    const startingPlayer = players[Math.floor(Math.random() * 2 + 0)];
 
-    const setActivePlayer = (firstPlayer, secondPlayer) => {
-        const players = [firstPlayer, secondPlayer];
-        const randomIndex = Math.floor(Math.random() * 2 + 0);
-        const startingPlayer = players[randomIndex];
-        const activePlayer = startingPlayer === firstPlayer ? secondPlayer : firstPlayer;
-        
-        return activePlayer;
-    };
+    const getActivePlayer = () => startingPlayer === playerOne ? playerTwo : playerOne;
 
     const makeActivePlayerMove = () => {
-        const currentPlayer = setActivePlayer(playerOne, playerTwo);
+        const currentPlayer = getActivePlayer();
         currentPlayer.setPlayerMark();
     };
 
     // call w/ horizontal parameter first, then w/ vertical if a winner hasn't been found
-    const checkWinningConditions = (loopDirection) => {
+    const checkForAGameWin = (loopDirection) => {
         let consecutiveMarks = [];
         let isThereAGameWin = false;
 
@@ -89,9 +84,10 @@ const gameLogicController = (function() {
                 }
             }
 
-            if (consecutiveMarks.every((mark) => mark === setActivePlayer(playerOne, playerTwo).playerMark)) {
+            if (consecutiveMarks.every((mark) => mark === getActivePlayer().playerMark)) {
                 isThereAGameWin = true;
-                return `Player ${setActivePlayer(playerOne, playerTwo)} has won!`;
+                console.log(`Player ${getActivePlayer()} has won!`);
+                return isThereAGameWin;
             } else {
                 consecutiveMarks = [];
                 continue;
@@ -106,9 +102,10 @@ const gameLogicController = (function() {
             consecutiveMarks.push(...gameBoard.getGridSpaceVal(1, 1));
             consecutiveMarks.push(...gameBoard.getGridSpaceVal(2, 2));
 
-            if (consecutiveMarks.every((mark) => mark === setActivePlayer(playerOne, playerTwo).playerMark)) {
+            if (consecutiveMarks.every((mark) => mark === getActivePlayer().playerMark)) {
                 isThereAGameWin = true;
-                return `Player ${setActivePlayer(playerOne, playerTwo)} has won!`;
+                console.log(`Player ${getActivePlayer()} has won!`);
+                return isThereAGameWin;
                 // console.log("A winner!");
                 // return;
             } else {
@@ -117,18 +114,21 @@ const gameLogicController = (function() {
                 consecutiveMarks.push(...gameBoard.getGridSpaceVal(1, 1));
                 consecutiveMarks.push(...gameBoard.getGridSpaceVal(2, 0));
 
-                if (consecutiveMarks.every((mark) => mark === setActivePlayer(playerOne, playerTwo).playerMark)) {
+                if (consecutiveMarks.every((mark) => mark === getActivePlayer().playerMark)) {
                     isThereAGameWin = true;
-                    return `Player ${setActivePlayer(playerOne, playerTwo)} has won!`;
+                    console.log(`Player ${getActivePlayer()} has won!`);
+                    return isThereAGameWin;
                     // console.log("A winner!");
                     // return;
                 }
             }
         }
     };
-    // *** WE ARE HERE!!! ***
 
-    return { checkWinningConditions };
+    // *** WE ARE HERE!!! ***
+    const checkForATie = () => {};
+
+    return {  };
 })()
 
-console.log(gameLogicController.checkWinningConditions("vertical"));
+// console.log(gameLogicController.checkForAGameWin("vertical"));
