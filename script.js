@@ -133,8 +133,6 @@ const gameLogicController = (function() {
         
     };
     // *** WE ARE HERE!!! ***
-    // if an active player's mark appears in a subsequent row or diagonal, then designate the player as a winner (call this inside checkWinningConditions())
-    const declareGameWinner = () => {};
 
     return { checkWinningConditions };
 })()
