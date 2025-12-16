@@ -125,6 +125,11 @@ const gameLogicController = (function() {
     };
 
     // *** WE ARE HERE!!! ***
+    // INITIALIZE a bool variable to hold whether a tie exists or not
+    // run a nested loop to check the gameboard grid's spaces
+    // IF checkForAWin returns false 
+    // OR if all spaces are all filled + checkForAWin still returns false
+    // THEN return true i.e. there is a tie
     const checkForATie = () => {};
 
     return {  };
