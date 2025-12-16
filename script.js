@@ -12,7 +12,7 @@
 const gameBoard = (function() {
     const grid = [
         [[1], [0], [1]],
-        [[1], [1], [0]], 
+        [[0], [1], [0]], 
         [[1], [0], [1]]
     ];
     const getGridSpaceVal = (rowIndex, colIndex) => grid[rowIndex][colIndex];
@@ -106,14 +106,33 @@ const gameLogicController = (function() {
             // }
         };
 
-        // *** WE ARE HERE!!! ***
         // diagonal win check
-        // no need for a loop
-        // should be run after the straight win check
-        // 2 win cases: check the grid spaces of [0][0], [1][1], [2,2], and then [2,0], [1,1], and [0,2]
+        if (consecutiveMarks.length === 0) {
+            consecutiveMarks.push(...gameBoard.getGridSpaceVal(0, 0));
+            consecutiveMarks.push(...gameBoard.getGridSpaceVal(1, 1));
+            consecutiveMarks.push(...gameBoard.getGridSpaceVal(2, 2));
+
+            if (consecutiveMarks.every((mark) => mark === 1)) {
+                return `Player ${setActivePlayer(playerOne, playerTwo)} has won!`;
+                // console.log("A winner!");
+                // return;
+            } else {
+                consecutiveMarks = [];
+                consecutiveMarks.push(...gameBoard.getGridSpaceVal(0, 2));
+                consecutiveMarks.push(...gameBoard.getGridSpaceVal(1, 1));
+                consecutiveMarks.push(...gameBoard.getGridSpaceVal(2, 0));
+
+                if (consecutiveMarks.every((mark) => mark === 1)) {
+                    return `Player ${setActivePlayer(playerOne, playerTwo)} has won!`;
+                    // console.log("A winner!");
+                    // return;
+                }
+            }
+        }
+
         
     };
-
+    // *** WE ARE HERE!!! ***
     // if an active player's mark appears in a subsequent row or diagonal, then designate the player as a winner (call this inside checkWinningConditions())
     const declareGameWinner = () => {};
 
