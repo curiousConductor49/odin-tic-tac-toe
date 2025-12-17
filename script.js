@@ -11,9 +11,9 @@
 
 const gameBoard = (function() {
     const grid = [
-        [[1], [0], [1]],
-        [[0], [1], [0]], 
-        [[1], [0], [1]]
+        [[], [], []],
+        [[], [], []], 
+        [[], [], []]
     ];
     const getGridSpaceVal = (rowIndex, colIndex) => grid[rowIndex][colIndex];
     const setGridSpaceVal = (rowIndex, colIndex, gridSpaceVal) => grid[rowIndex][colIndex] = gridSpaceVal;
