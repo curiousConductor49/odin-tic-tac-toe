@@ -84,8 +84,10 @@ const gameLogicController = (function() {
             }
 
             if (consecutiveMarks.every((mark) => mark === getActivePlayer().playerMark)) {
+            // if (consecutiveMarks.every((mark) => mark === 1)) {
                 isThereAGameWin = true;
                 console.log(`Player ${getActivePlayer()} has won!`);
+                // console.log("A winner!");
                 return isThereAGameWin;
             } else {
                 consecutiveMarks = [];
@@ -102,11 +104,12 @@ const gameLogicController = (function() {
             consecutiveMarks.push(...gameBoard.getGridSpaceVal(2, 2));
 
             if (consecutiveMarks.every((mark) => mark === getActivePlayer().playerMark)) {
+            // if (consecutiveMarks.every((mark) => mark === 1)) {
                 isThereAGameWin = true;
                 console.log(`Player ${getActivePlayer()} has won!`);
                 return isThereAGameWin;
                 // console.log("A winner!");
-                // return;
+                // return isThereAGameWin;
             } else {
                 consecutiveMarks = [];
                 consecutiveMarks.push(...gameBoard.getGridSpaceVal(0, 2));
@@ -114,25 +117,44 @@ const gameLogicController = (function() {
                 consecutiveMarks.push(...gameBoard.getGridSpaceVal(2, 0));
 
                 if (consecutiveMarks.every((mark) => mark === getActivePlayer().playerMark)) {
+                // if (consecutiveMarks.every((mark) => mark === 1)) {
                     isThereAGameWin = true;
                     console.log(`Player ${getActivePlayer()} has won!`);
                     return isThereAGameWin;
                     // console.log("A winner!");
-                    // return;
+                    // return isThereAGameWin;
+                } else {
+                    return isThereAGameWin;
                 }
             }
         }
     };
 
-    // *** WE ARE HERE!!! ***
-    // INITIALIZE a bool variable to hold whether a tie exists or not
-    // run a nested loop to check the gameboard grid's spaces
-    // IF checkForAWin returns false 
-    // OR if all spaces are all filled + checkForAWin still returns false
-    // THEN return true i.e. there is a tie
-    const checkForATie = () => {};
+    const checkForAGameTie = () => {
+        let isThereAGameTie = false;
+        const currentGridValues = [];
 
-    return {  };
+        for (let outerLoopIndex = 0; outerLoopIndex < gameBoard.grid.length; outerLoopIndex++) {    
+            for (let innerLoopIndex = 0; innerLoopIndex < gameBoard.grid[outerLoopIndex].length; innerLoopIndex++) {
+                currentGridValues.push(...gameBoard.getGridSpaceVal(outerLoopIndex, innerLoopIndex));
+            }
+        }
+
+        if (currentGridValues.length === 9 && checkForAGameWin("horizontal") === false && checkForAGameWin("vertical") === false) {
+            console.log("It's a tie! Neither player wins!");
+            isThereAGameTie = true;
+            return isThereAGameTie;
+        } else {
+            return isThereAGameTie;
+        }
+    };
+
+      // *** WE ARE HERE!!! ***
+
+    return { };
 })()
 
 // console.log(gameLogicController.checkForAGameWin("vertical"));
+// console.log(gameLogicController.checkForAGameWin("horizontal"));
+// console.log(gameLogicController.checkForAGameWin("vertical"));
+// console.log(gameLogicController.checkForAGameTie());
