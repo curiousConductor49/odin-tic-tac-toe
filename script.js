@@ -152,12 +152,14 @@ const gameLogicController = (function() {
     // *** WE ARE HERE!!! ***
     // to end a game round...
     // we need to specify the winning player by calling getActivePlayer
-    const endGameRound = () => {};
+    const endGameRound = () => {
+        return `Tic-tac-tover! ${getActivePlayer()} wins the round!`;
+    };
 
     // to begin a new game round...
     // we need to reset the gameboard grid and wrap the playerOne, playerTwo, players, and startingPlayer variables inside a function, so when it's called to start a new round, those variables "start off fresh"
     const beginNewGameRound = () => {};
-    
+
     return { };
 })()
 
