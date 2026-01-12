@@ -161,7 +161,14 @@ const gameLogicController = (function() {
         return `Tic-tac-tover! ${getActivePlayer()} wins the round!`;
     };
 
-    return { };
+    return { 
+        beginNewGameRound,
+        getActivePlayer,
+        makeActivePlayerMove,
+        checkForAGameWin,
+        checkForAGameTie,
+        endGameRound,
+    };
 })()
 
  // *** WE ARE HERE!!! ***
