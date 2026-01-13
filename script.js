@@ -171,9 +171,12 @@ const gameLogicController = (function() {
     };
 })()
 
- // *** WE ARE HERE!!! ***
+// *** WE ARE HERE!!! ***
+// Testing/Debugging Process: play a game round!
 
-// console.log(gameLogicController.checkForAGameWin("vertical"));
-// console.log(gameLogicController.checkForAGameWin("horizontal"));
-// console.log(gameLogicController.checkForAGameWin("vertical"));
-// console.log(gameLogicController.checkForAGameTie());
+// Begin a new game round
+// Create players
+
+// Determine active player
+// Make a mark on the gameboard grid
+// Repeat above process until a win or tie is reached
