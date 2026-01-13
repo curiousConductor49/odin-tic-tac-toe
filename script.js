@@ -60,16 +60,19 @@ const gameLogicController = (function() {
         for (let i = 0; i < gameBoard.grid.length; i++) {    
             gameBoard.grid[i] = [[], [], []];
         }
-
-        const playerOne = (selectedName, selectedMark) => createPlayer(selectedName, selectedMark);
-        const playerTwo = (selectedName, selectedMark) => createPlayer(selectedName, selectedMark);
-        const players = [playerOne, playerTwo];
-        const startingPlayer = players[Math.floor(Math.random() * 2 + 0)];
-        
-        return { playerOne, playerTwo, players, startingPlayer };
     };
 
-    const getActivePlayer = () => beginNewGameRound.startingPlayer === beginNewGameRound.playerOne ? beginNewGameRound.playerTwo : beginNewGameRound.playerOne;
+    const createNewPlayers = () => {
+        const playerOne = createPlayer(selectedName, selectedMark);
+        const playerTwo = createPlayer(selectedName, selectedMark);
+
+        const players = [playerOne, playerTwo];
+        const startingPlayer = players[Math.floor(Math.random() * 2 + 0)];
+
+        return { playerOne, playerTwo, players, startingPlayer };
+    }
+
+    const getActivePlayer = () => createNewPlayers.startingPlayer === createNewPlayers.playerOne ? createNewPlayers.playerTwo : createNewPlayers.playerOne;
 
     const makeActivePlayerMove = () => {
         const currentPlayer = getActivePlayer();
@@ -163,6 +166,7 @@ const gameLogicController = (function() {
 
     return { 
         beginNewGameRound,
+        createNewPlayers,
         getActivePlayer,
         makeActivePlayerMove,
         checkForAGameWin,
