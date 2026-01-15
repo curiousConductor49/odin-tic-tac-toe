@@ -148,8 +148,28 @@ const gameLogicController = (function() {
 // Have the IIFE return an object with the HTML gameboard divs and the rendering function
 
 const gameDisplayController = (function() {
-    
+    const gameBoardGridArea = document.querySelector("#gameboard-grid-area");
+
+    const createGameBoard = () => {
+        for (let outerLoopIndex = 0; outerLoopIndex < gameBoard.grid.length; outerLoopIndex++) {    
+            for (let innerLoopIndex = 0; innerLoopIndex < gameBoard.grid[outerLoopIndex].length; innerLoopIndex++) {
+                const gridSpaceSquare = document.createElement("div");
+                gridSpaceSquare.setAttribute("row", outerLoopIndex);
+                gridSpaceSquare.setAttribute("column", innerLoopIndex);
+                gameBoardGridArea.append(gridSpaceSquare);
+
+                // this is just to see the divs, delete later
+                // gridSpaceSquare.style.backgroundColor = "blue";
+                // gridSpaceSquare.style.height = "100px";
+                // gridSpaceSquare.style.width = "100px";
+            }
+        }
+    }
+
+    return { createGameBoard }
 })()
+
+// gameDisplayController.createGameBoard();
 
 // Testing/Debugging Process: play a game round!
 
