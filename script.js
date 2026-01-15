@@ -142,6 +142,11 @@ const gameLogicController = (function() {
 // *** WE ARE HERE!!! ***
 // pseudocode!!
 // create an IIFE that returns an object with the necessary DOM elements + a function that renders the gameboard grid to the webpage 
+// loop over the grid array and create 9 child divs, which will act as board squares representing the 2D array values (each has a row and column attribute).
+// Next, create a rendering function to loop over the grid array again, this time set the textContent of each corresponding div of the HTML parent's children (use the children DOM property and find the right div using its row and column attributes) to the nested array's value (if empty, then just set it to an empty string)
+// We separate these two actions because we want the render function to be reusable (e.g. when a player makes a mark on the board, we don't want to recreate the whole board from scratch, just modify the right square and render it on the webpage)
+// Have the IIFE return an object with the HTML gameboard divs and the rendering function
+
 const gameDisplayController = (function() {
     
 })()
