@@ -144,9 +144,7 @@ const gameLogicController = (function() {
 // write the functions in the gameDisplayController IIFE that allow players to add marks to a specific gameboard grid space by interacting with the right DOM element
     // NOTE: might need to update some of our function bodies and variable placement in the gameLogicController, since we're taking dynamic input
 
-// in the HTML, we'll need a pair of inputs: one for player 1's name and mark, and one for player 2's name and mark. Stick this in a form with a button for submission; the names should be text inputs and the marks should be a dropdown (X or O).
-// in the CSS, we'll need some rough styling that makes the gameboard and the button easy to see and click on
-// in the JS, we need to test the logic flow of creating players and designating the active player (can change the active player manually); once this is solid we move on to... 
+// we need to test the logic flow of creating players and designating the active player (can change the active player manually); once this is solid we move on to... 
 // we'll need to create a function inside gameDisplayController, in which we:
     // access and store the respective DOM elements (get their values using a form with the default behaviour prevented + prevent submission and prompt the user to pick a different value if the two mark inputs are the same...do while loop, maybe)
     // call the createPlayer function to make players (include it in the callback function for the play button's event listener to pass it the info of the form, below the beginNewGameRound function call)
