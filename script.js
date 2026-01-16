@@ -150,13 +150,13 @@ const gameLogicController = (function() {
 // we'll need to create a function inside gameDisplayController, in which we:
     // access and store the respective DOM elements (get their values using a form with the default behaviour prevented + prevent submission and prompt the user to pick a different value if the two mark inputs are the same...do while loop, maybe)
     // call the createPlayer function to make players (include it in the callback function for the play button's event listener to pass it the info of the form, below the beginNewGameRound function call)
-    // disable the button and grey it out
+    // disable the button and grey it out, as well as the player creation form inputs
 // then we:
     // set an event listener on the gameBoardGridArea to use event bubbling so a listener is set on all its children (aka the gameboard spaces)
     // we pass it a callback function, in which we:
         // get the row and column attributes of the target from the event (ought to be a click)
         // check if the target's textContent is already occupied; if so then simply return, else set the target's textContent to the active player's mark, update the gameboard grid space, and check for a win and tie
-        // if a tie or win is found, then end the game round and enable the play button again, allowing the process to repeat upon a click
+        // if a tie or win is found, then end the game round and enable the play button + form inputs again, allowing the process to repeat upon a click
 
 const gameDisplayController = (function() {
     const gameBoardGridArea = document.querySelector("#gameboard-grid-area");
