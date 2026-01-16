@@ -9,7 +9,39 @@
 <body>
     <h1>Tic-Tac-Toe</h1>
     <main>
-        <div id="gameboard-grid-area"></div>
+
+        <section class="player-creation-container">
+            <form action="">
+                <fieldset class="player-one-creation">
+                    <legend>Player One, select your name and mark.</legend>
+                    <label for=""><input type="text"></label>
+                    <label for="">
+                        <select>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+                    </label>
+                </fieldset>
+
+                <fieldset class="player-two-creation">
+                    <legend>Player Two, select your name and mark.</legend>
+                    <label for=""><input type="text"></label>
+                    <label for="">
+                        <select>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+                    </label>
+                </fieldset>
+
+                <button id="submit-btn">Play</button>
+            </form>
+        </section>
+
+        <section class="game-container">
+           <div id="gameboard-grid-area"></div> 
+        </section>
+
     </main>
     <script src="script.js"></script>
 </body>
