@@ -26,9 +26,9 @@ const gameLogicController = (function() {
         }
     };
 
-    const createNewPlayers = () => {
-        const playerOne = createPlayer(selectedName, selectedMark);
-        const playerTwo = createPlayer(selectedName, selectedMark);
+    const createNewPlayers = (playerCreationInput) => {
+        const playerOne = createPlayer(playerCreationInput[0], playerCreationInput[1]);
+        const playerTwo = createPlayer(playerCreationInput[2], playerCreationInput[3]);
 
         const players = [playerOne, playerTwo];
         const startingPlayer = players[Math.floor(Math.random() * 2 + 0)];
@@ -149,6 +149,7 @@ const gameLogicController = (function() {
     // call the createPlayer function to make players (include it in the callback function for the play button's event listener to pass it the info of the form, below the beginNewGameRound function call)
     // disable the button and grey it out, as well as the player creation form inputs
     // test if setting the active player works (do it manually for now)
+
 // then we:
     // set an event listener on the gameBoardGridArea to use event bubbling so a listener is set on all its children (aka the gameboard spaces)
     // we pass it a callback function, in which we:
@@ -157,6 +158,12 @@ const gameLogicController = (function() {
         // if a tie or win is found, then end the game round and enable the play button + form inputs again, allowing the process to repeat upon a click
 
 const gameDisplayController = (function() {
+    const playerOneNameInput = document.querySelector("#player-one-name");
+    const playerOneMarkInput = document.querySelector("#player-one-mark");
+    const playerTwoNameInput = document.querySelector("#player-two-name");
+    const playerTwoMarkInput = document.querySelector("#player-two-mark");
+    const markInputReminder = document.querySelector("#mark-input-reminder");
+    const playerCreationSubmitBtn = document.querySelector("#submit-btn");
     const gameBoardGridArea = document.querySelector("#gameboard-grid-area");
 
     const createAndRenderGameBoard = () => {
@@ -178,9 +185,31 @@ const gameDisplayController = (function() {
         }
     }
 
+    const playerCreationFormHandler = () => {
+        if (playerOneMarkInput.value === playerTwoMarkInput.value) {
+            markInputReminder.textContent = "Players must have different marks!";
+        } else {
+            markInputReminder.textContent = "";
+            playerCreationSubmitBtn.setAttribute("disabled", "");
+            gameLogicController.beginNewGameRound();
+
+            const playerOne = createPlayer(playerOneNameInput.value, playerOneMarkInput.value);
+            const playerTwo = createPlayer(playerTwoNameInput.value, playerTwoMarkInput.value);
+
+            return { playerOne, playerTwo };
+        }
+    }
+
+    playerCreationSubmitBtn.addEventListener("click", (event) => {
+        event.preventDefault();
+        // playerCreationFormHandler();
+        console.log(playerCreationFormHandler().playerOne);
+    });
+    
+
     // *** WE ARE HERE!!! ***
 
-    return { createAndRenderGameBoard }
+    // return { createAndRenderGameBoard, playerCreationFormHandler }
 })()
 
 // gameDisplayController.createAndRenderGameBoard();
