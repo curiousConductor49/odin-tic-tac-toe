@@ -27,13 +27,14 @@ const gameLogicController = (function() {
     }
 
     const setStartingPlayer = (firstPlayer, secondPlayer) => {
-        const players = [firstPlayer, firstPlayer];
-        const startingPlayer = players[Math.floor(Math.random() * 2 + 0)];
+        const players = [firstPlayer, secondPlayer];
+        const randomIndex = Math.floor(Math.random() * 2);
+        const startingPlayer = players[randomIndex];
 
         return startingPlayer;
     }
 
-    const getActivePlayer = (firstPlayer, secondPlayer) => setStartingPlayer() === firstPlayer ? secondPlayer : firstPlayer;
+    const getActivePlayer = (firstPlayer, secondPlayer) => setStartingPlayer(firstPlayer, secondPlayer) === firstPlayer ? secondPlayer : firstPlayer;
 
     const makeActivePlayerMove = () => {
         const currentPlayer = getActivePlayer();
@@ -135,24 +136,6 @@ const gameLogicController = (function() {
     };
 })()
 
-
-// pseudocode!!
-// write the functions in the gameDisplayController IIFE that allow players to add marks to a specific gameboard grid space by interacting with the right DOM element
-    // NOTE: might need to update some of our function bodies and variable placement in the gameLogicController, since we're taking dynamic input
-
-// we'll need to create a function inside gameDisplayController, in which we:
-    // access and store the respective DOM elements (get their values using a form with the default behaviour prevented + prevent submission and prompt the user to pick a different value if the two mark inputs are the same...do while loop, maybe)
-    // call the createPlayer function to make players (include it in the callback function for the play button's event listener to pass it the info of the form, below the beginNewGameRound function call)
-    // disable the button and grey it out, as well as the player creation form inputs
-    // test if setting the active player works (do it manually for now)
-
-// then we:
-    // set an event listener on the gameBoardGridArea to use event bubbling so a listener is set on all its children (aka the gameboard spaces)
-    // we pass it a callback function, in which we:
-        // get the row and column attributes of the target from the event (ought to be a click)
-        // check if the target's textContent is already occupied; if so then simply return, else set the target's textContent to the active player's mark, update the gameboard grid space, and check for a win and tie
-        // if a tie or win is found, then end the game round and enable the play button + form inputs again, allowing the process to repeat upon a click
-
 const gameDisplayController = (function() {
     const playerOneNameInput = document.querySelector("#player-one-name");
     const playerOneMarkInput = document.querySelector("#player-one-mark");
@@ -165,7 +148,7 @@ const gameDisplayController = (function() {
     const createAndRenderGameBoard = () => {
         for (let outerLoopIndex = 0; outerLoopIndex < gameBoard.grid.length; outerLoopIndex++) {    
             for (let innerLoopIndex = 0; innerLoopIndex < gameBoard.grid[outerLoopIndex].length; innerLoopIndex++) {
-                const gridSpaceSquare = document.createElement("div");
+                const gridSpaceSquare = document.createElement("button");
 
                 gridSpaceSquare.setAttribute("row", outerLoopIndex);
                 gridSpaceSquare.setAttribute("column", innerLoopIndex);
@@ -184,7 +167,6 @@ const gameDisplayController = (function() {
     const playerCreationFormHandler = () => {
         if (playerOneMarkInput.value === playerTwoMarkInput.value) {
             markInputReminder.textContent = "Players must have different marks!";
-            return null;
         } else {
             markInputReminder.textContent = "";
             playerCreationSubmitBtn.setAttribute("disabled", "");
@@ -195,15 +177,28 @@ const gameDisplayController = (function() {
 
             return { playerOne, playerTwo };
         }
-    }
+    } 
 
     playerCreationSubmitBtn.addEventListener("click", (event) => {
         event.preventDefault();
-        console.log(playerCreationFormHandler.playerOne);
+        // const beginner = gameLogicController.setStartingPlayer(playerCreationFormHandler()["playerOne"], playerCreationFormHandler()["playerTwo"]);
+        // const active = gameLogicController.getActivePlayer(playerCreationFormHandler()["playerOne"], playerCreationFormHandler()["playerTwo"]);
+        // console.log(beginner);
+        // console.log(active);
     });
-    
-
 })()
+
+// pseudocode!!
+// write the functions in the gameDisplayController IIFE that allow players to add marks to a specific gameboard grid space by interacting with the right DOM element
+    // NOTE: might need to update some of our function bodies and variable placement in the gameLogicController, since we're taking dynamic input
+
+// manually test getting the starting and active players
+
+// set an event listener on the gameBoardGridArea to use event bubbling so a listener is set on all its children (aka the gameboard spaces)
+// we pass it a callback function, in which we:
+    // get the row and column attributes of the target from the event (ought to be a click)
+    // check if the target's textContent is already occupied; if so then simply return, else set the target's textContent to the active player's mark, update the gameboard grid space, and check for a win and tie
+    // if a tie or win is found, then end the game round and enable the play button + form inputs again, allowing the process to repeat upon a click
 
 // Testing/Debugging Process: play a game round!
 
