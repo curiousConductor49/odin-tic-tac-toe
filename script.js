@@ -10,33 +10,30 @@ const gameBoard = (function() {
     return { grid, getGridSpaceVal, setGridSpaceVal };
 })()
 
-function createPlayer(selectedName, selectedMark) {
-    const playerName = selectedName;
-    const playerMark = selectedMark;
-
-    const setPlayerMark = (rowIndex, colIndex) => gameBoard.setGridSpaceVal(rowIndex, colIndex, playerMark);
-
-    return { playerName, playerMark, setPlayerMark };
-}
-
 const gameLogicController = (function() {
     const beginNewGameRound = () => {
         for (let i = 0; i < gameBoard.grid.length; i++) {    
             gameBoard.grid[i] = [[], [], []];
         }
     };
+    
+    const createNewPlayer = (selectedName, selectedMark) => {
+        const playerName = selectedName;
+        const playerMark = selectedMark;
 
-    const createNewPlayers = (playerCreationInput) => {
-        const playerOne = createPlayer(playerCreationInput[0], playerCreationInput[1]);
-        const playerTwo = createPlayer(playerCreationInput[2], playerCreationInput[3]);
+        const setPlayerMark = (rowIndex, colIndex) => gameBoard.setGridSpaceVal(rowIndex, colIndex, playerMark);
 
-        const players = [playerOne, playerTwo];
-        const startingPlayer = players[Math.floor(Math.random() * 2 + 0)];
-
-        return { playerOne, playerTwo, players, startingPlayer };
+        return { playerName, playerMark, setPlayerMark };
     }
 
-    const getActivePlayer = () => createNewPlayers.startingPlayer === createNewPlayers.playerOne ? createNewPlayers.playerTwo : createNewPlayers.playerOne;
+    const setStartingPlayer = (firstPlayer, secondPlayer) => {
+        const players = [firstPlayer, firstPlayer];
+        const startingPlayer = players[Math.floor(Math.random() * 2 + 0)];
+
+        return startingPlayer;
+    }
+
+    const getActivePlayer = (firstPlayer, secondPlayer) => setStartingPlayer() === firstPlayer ? secondPlayer : firstPlayer;
 
     const makeActivePlayerMove = () => {
         const currentPlayer = getActivePlayer();
@@ -124,13 +121,12 @@ const gameLogicController = (function() {
         }
     };
 
-    const endGameRound = () => {
-        return `Tic-tac-tover! ${getActivePlayer()} wins the round!`;
-    };
+    const endGameRound = () => `Tic-tac-tover! ${getActivePlayer()} wins the round!`;
 
     return { 
         beginNewGameRound,
-        createNewPlayers,
+        createNewPlayer,
+        setStartingPlayer,
         getActivePlayer,
         makeActivePlayerMove,
         checkForAGameWin,
@@ -184,17 +180,18 @@ const gameDisplayController = (function() {
             }
         }
     }
-
+    // *** WE ARE HERE!!! ***
     const playerCreationFormHandler = () => {
         if (playerOneMarkInput.value === playerTwoMarkInput.value) {
             markInputReminder.textContent = "Players must have different marks!";
+            return null;
         } else {
             markInputReminder.textContent = "";
             playerCreationSubmitBtn.setAttribute("disabled", "");
             gameLogicController.beginNewGameRound();
 
-            const playerOne = createPlayer(playerOneNameInput.value, playerOneMarkInput.value);
-            const playerTwo = createPlayer(playerTwoNameInput.value, playerTwoMarkInput.value);
+            const playerOne = gameLogicController.createNewPlayer(playerOneNameInput.value, playerOneMarkInput.value);
+            const playerTwo = gameLogicController.createNewPlayer(playerTwoNameInput.value, playerTwoMarkInput.value);
 
             return { playerOne, playerTwo };
         }
@@ -202,17 +199,11 @@ const gameDisplayController = (function() {
 
     playerCreationSubmitBtn.addEventListener("click", (event) => {
         event.preventDefault();
-        // playerCreationFormHandler();
-        console.log(playerCreationFormHandler().playerOne);
+        console.log(playerCreationFormHandler.playerOne);
     });
     
 
-    // *** WE ARE HERE!!! ***
-
-    // return { createAndRenderGameBoard, playerCreationFormHandler }
 })()
-
-// gameDisplayController.createAndRenderGameBoard();
 
 // Testing/Debugging Process: play a game round!
 
