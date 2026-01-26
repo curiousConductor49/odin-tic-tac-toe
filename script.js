@@ -1,7 +1,7 @@
 const gameBoard = (function() {
     const grid = [
         [[], [], []],
-        [[], [], []], 
+        [[], ["X"], []], 
         [[], [], []]
     ];
     const getGridSpaceVal = (rowIndex, colIndex) => grid[rowIndex][colIndex];
@@ -59,19 +59,24 @@ const gameLogicController = (function() {
 
     const makeActivePlayerMove = (firstPlayer, secondPlayer, startingPlayer, rowIndex, colIndex) => {
         const currentPlayer = getActivePlayer(firstPlayer, secondPlayer, startingPlayer);
-        currentPlayer.setPlayerMark(rowIndex, colIndex, currentPlayer.playerMark);
+        if (gameBoard.grid[rowIndex][colIndex].length !== 0) {
+            console.log("Sorry, space is taken!");
+            // have a paragraph whose textContent is populated with a message informing the players the space is already taken
+        } else {
+            currentPlayer.setPlayerMark(rowIndex, colIndex, currentPlayer.playerMark);
+        }
     };
 
     // TESTING ZONE
-    // const playerOne = createNewPlayer("john", "X");
-    // const playerTwo = createNewPlayer("jane", "O");
-    // const heWhoStarts = setStartingPlayer(playerOne, playerTwo);
-    // const activePlayer = getActivePlayer(playerOne, playerTwo, heWhoStarts);
+    const playerOne = createNewPlayer("john", "X");
+    const playerTwo = createNewPlayer("jane", "O");
+    const heWhoStarts = setStartingPlayer(playerOne, playerTwo);
+    const activePlayer = getActivePlayer(playerOne, playerTwo, heWhoStarts);
 
-    // console.log(heWhoStarts);
-    // console.log(activePlayer);
-    // makeActivePlayerMove(playerOne, playerTwo, activePlayer, 1, 1);
-    // console.log(gameBoard.grid);
+    console.log(heWhoStarts);
+    console.log(activePlayer);
+    makeActivePlayerMove(playerOne, playerTwo, activePlayer, 1, 1);
+    console.log(gameBoard.grid);
 
     // call w/ horizontal parameter first, then w/ vertical if a winner hasn't been found
     const checkForAGameWin = (loopDirection) => {
