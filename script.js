@@ -144,56 +144,56 @@ const gameLogicController = (function() {
     const endGameRound = (activePlayer) => `Tic-tac-tover! ${activePlayer} wins the round!`;
 
     // TESTING ZONE
-    const playerOne = createNewPlayer("john", "X");
-    const playerTwo = createNewPlayer("jane", "O");
-    const heWhoStarts = playerOne;
+    // const playerOne = createNewPlayer("john", "X");
+    // const playerTwo = createNewPlayer("jane", "O");
+    // const heWhoStarts = playerOne;
     
-    const activePlayer = getActivePlayer(playerOne, playerTwo, heWhoStarts);
-    // console.log(heWhoStarts);
-    // console.log(activePlayer);
+    // const activePlayer = getActivePlayer(playerOne, playerTwo, heWhoStarts);
+    // // console.log(heWhoStarts);
+    // // console.log(activePlayer);
 
-    // turn 1
-    setActivePlayerMark(playerOne, playerTwo, activePlayer, 0, 0);
-    console.log(gameBoard.grid);
+    // // turn 1
+    // setActivePlayerMark(playerOne, playerTwo, activePlayer, 0, 0);
+    // console.log(gameBoard.grid);
 
-    // turn 2
-    setActivePlayerMark(playerOne, playerTwo, activePlayer, 2, 0);
-    console.log(gameBoard.grid);
+    // // turn 2
+    // setActivePlayerMark(playerOne, playerTwo, activePlayer, 2, 0);
+    // console.log(gameBoard.grid);
 
-    // turn 3
-    setActivePlayerMark(playerOne, playerTwo, activePlayer, 1, 0);
-    console.log(gameBoard.grid);
+    // // turn 3
+    // setActivePlayerMark(playerOne, playerTwo, activePlayer, 1, 0);
+    // console.log(gameBoard.grid);
 
-    // turn 4
-    setActivePlayerMark(playerOne, playerTwo, activePlayer, 0, 1);
-    console.log(gameBoard.grid);
+    // // turn 4
+    // setActivePlayerMark(playerOne, playerTwo, activePlayer, 0, 1);
+    // console.log(gameBoard.grid);
 
-    // turn 5
-    setActivePlayerMark(playerOne, playerTwo, activePlayer, 2,1);
-    console.log(gameBoard.grid);
+    // // turn 5
+    // setActivePlayerMark(playerOne, playerTwo, activePlayer, 2,1);
+    // console.log(gameBoard.grid);
 
-    // turn 6
-    setActivePlayerMark(playerOne, playerTwo, activePlayer, 1,2);
-    console.log(gameBoard.grid);
+    // // turn 6
+    // setActivePlayerMark(playerOne, playerTwo, activePlayer, 1,2);
+    // console.log(gameBoard.grid);
 
-    // turn 7
-    setActivePlayerMark(playerOne, playerTwo, activePlayer, 0,2);
-    console.log(gameBoard.grid);
+    // // turn 7
+    // setActivePlayerMark(playerOne, playerTwo, activePlayer, 0,2);
+    // console.log(gameBoard.grid);
 
-    // turn 8
-    setActivePlayerMark(playerOne, playerTwo, activePlayer, 1,1);
-    console.log(gameBoard.grid);
+    // // turn 8
+    // setActivePlayerMark(playerOne, playerTwo, activePlayer, 1,1);
+    // console.log(gameBoard.grid);
 
-    // turn 9
-    setActivePlayerMark(playerOne, playerTwo, activePlayer, 2,2);
-    console.log(gameBoard.grid);
+    // // turn 9
+    // setActivePlayerMark(playerOne, playerTwo, activePlayer, 2,2);
+    // console.log(gameBoard.grid);
 
-    if (checkForAGameWin("horizontal", activePlayer) === false) {
-        checkForAGameWin("vertical", activePlayer);
-    }
-    if (checkForAGameWin("horizontal", activePlayer) === false && checkForAGameWin("vertical", activePlayer) === false) {
-        checkForAGameTie();
-    }
+    // if (checkForAGameWin("horizontal", activePlayer) === false) {
+    //     checkForAGameWin("vertical", activePlayer);
+    // }
+    // if (checkForAGameWin("horizontal", activePlayer) === false && checkForAGameWin("vertical", activePlayer) === false) {
+    //     checkForAGameTie();
+    // }
 
 
     return { 
@@ -265,8 +265,10 @@ const gameDisplayController = (function() {
 // pseudocode!!
 // write the functions in the gameDisplayController IIFE that allow players to add marks to a specific gameboard grid space by interacting with the right DOM element
 
-// CURRENT TASK --> rework the function to make the active player add a mark to the gameboard grid
+// CURRENT OBJECTIVE --> connect the gameboard grid array to its DOM representation.
+// start by split-reworking the function to render its contents (should be a function to build out the grid, then a separate one to be called per game turn to "refresh" the screen)
 
+// ** TO-DO, TO-DO, TO-DO-DO-DO-DO-DOOOOO... ***
 // set an event listener on the gameBoardGridArea to use event bubbling so a listener is set on all its children (aka the gameboard spaces)
 // we pass it a callback function, in which we:
     // get the row and column attributes of the target from the event (ought to be a click)
@@ -274,12 +276,3 @@ const gameDisplayController = (function() {
         // if so then simply return
         // else, set the target's textContent to the active player's mark (see above note about rerendering), update the corresponding 2D array position in the gameboard grid array with the active player's mark, and check for a win and tie
     // if a tie or win is found, then end the game round and enable the play button + form inputs again, allowing the process to repeat upon a click
-
-// Testing/Debugging Process: play a game round!
-
-// Begin a new game round
-// Create players
-
-// Determine active player
-// Make a mark on the gameboard grid
-// Repeat above process until a win or tie is reached
