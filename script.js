@@ -5,7 +5,7 @@ const gameBoard = (function() {
         [[], [], []]
     ];
     const getGridSpaceVal = (rowIndex, colIndex) => grid[rowIndex][colIndex];
-    const setGridSpaceVal = (rowIndex, colIndex, gridSpaceVal) => grid[rowIndex][colIndex] = gridSpaceVal;
+    const setGridSpaceVal = (rowIndex, colIndex, gridSpaceVal) => grid[rowIndex][colIndex] = [gridSpaceVal];
 
     return { grid, getGridSpaceVal, setGridSpaceVal };
 })()
@@ -57,10 +57,21 @@ const gameLogicController = (function() {
         }        
     };
 
-    const makeActivePlayerMove = (firstPlayer, secondPlayer, startingPlayer) => {
+    const makeActivePlayerMove = (firstPlayer, secondPlayer, startingPlayer, rowIndex, colIndex) => {
         const currentPlayer = getActivePlayer(firstPlayer, secondPlayer, startingPlayer);
-        currentPlayer.setPlayerMark();
+        currentPlayer.setPlayerMark(rowIndex, colIndex, currentPlayer.playerMark);
     };
+
+    // TESTING ZONE
+    // const playerOne = createNewPlayer("john", "X");
+    // const playerTwo = createNewPlayer("jane", "O");
+    // const heWhoStarts = setStartingPlayer(playerOne, playerTwo);
+    // const activePlayer = getActivePlayer(playerOne, playerTwo, heWhoStarts);
+
+    // console.log(heWhoStarts);
+    // console.log(activePlayer);
+    // makeActivePlayerMove(playerOne, playerTwo, activePlayer, 1, 1);
+    // console.log(gameBoard.grid);
 
     // call w/ horizontal parameter first, then w/ vertical if a winner hasn't been found
     const checkForAGameWin = (loopDirection) => {
@@ -202,7 +213,6 @@ const gameDisplayController = (function() {
     } 
 
     // *** WE ARE HERE!!! ***
-    // current task: 
     playerCreationSubmitBtn.addEventListener("click", (event) => {
         event.preventDefault();
         // const beginner = gameLogicController.setStartingPlayer(playerCreationFormHandler()["playerOne"], playerCreationFormHandler()["playerTwo"]);
@@ -215,7 +225,7 @@ const gameDisplayController = (function() {
 // pseudocode!!
 // write the functions in the gameDisplayController IIFE that allow players to add marks to a specific gameboard grid space by interacting with the right DOM element
 
-// CURRENT TASK --> rework the functions to determine starting and active players + manually test them
+// CURRENT TASK --> rework the function to make the active player add a mark to the gameboard grid
 
 // set an event listener on the gameBoardGridArea to use event bubbling so a listener is set on all its children (aka the gameboard spaces)
 // we pass it a callback function, in which we:
