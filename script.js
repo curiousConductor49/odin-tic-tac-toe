@@ -1,7 +1,7 @@
 const gameBoard = (function() {
     const grid = [
         [[], [], []],
-        [[], ["X"], []], 
+        [[], [], []], 
         [[], [], []]
     ];
     const getGridSpaceVal = (rowIndex, colIndex) => grid[rowIndex][colIndex];
@@ -57,7 +57,7 @@ const gameLogicController = (function() {
         }        
     };
 
-    const makeActivePlayerMove = (firstPlayer, secondPlayer, startingPlayer, rowIndex, colIndex) => {
+    const setActivePlayerMark = (firstPlayer, secondPlayer, startingPlayer, rowIndex, colIndex) => {
         const currentPlayer = getActivePlayer(firstPlayer, secondPlayer, startingPlayer);
         if (gameBoard.grid[rowIndex][colIndex].length !== 0) {
             console.log("Sorry, space is taken!");
@@ -67,19 +67,8 @@ const gameLogicController = (function() {
         }
     };
 
-    // TESTING ZONE
-    const playerOne = createNewPlayer("john", "X");
-    const playerTwo = createNewPlayer("jane", "O");
-    const heWhoStarts = setStartingPlayer(playerOne, playerTwo);
-    const activePlayer = getActivePlayer(playerOne, playerTwo, heWhoStarts);
-
-    console.log(heWhoStarts);
-    console.log(activePlayer);
-    makeActivePlayerMove(playerOne, playerTwo, activePlayer, 1, 1);
-    console.log(gameBoard.grid);
-
     // call w/ horizontal parameter first, then w/ vertical if a winner hasn't been found
-    const checkForAGameWin = (loopDirection) => {
+    const checkForAGameWin = (loopDirection, activePlayer) => {
         let consecutiveMarks = [];
         let isThereAGameWin = false;
 
@@ -87,51 +76,44 @@ const gameLogicController = (function() {
         for (let outerLoopIndex = 0; outerLoopIndex < gameBoard.grid.length; outerLoopIndex++) {    
             for (let innerLoopIndex = 0; innerLoopIndex < gameBoard.grid[outerLoopIndex].length; innerLoopIndex++) {
                 if (loopDirection === "horizontal") {
-                    consecutiveMarks.push(...gameBoard.getGridSpaceVal(outerLoopIndex, innerLoopIndex));
+                    consecutiveMarks.push((gameBoard.getGridSpaceVal(outerLoopIndex, innerLoopIndex).length === 0 ? null : gameBoard.getGridSpaceVal(outerLoopIndex, innerLoopIndex)[0]));
                 } else if (loopDirection === "vertical") {
-                    consecutiveMarks.push(...gameBoard.getGridSpaceVal(innerLoopIndex, outerLoopIndex));
+                    consecutiveMarks.push((gameBoard.getGridSpaceVal(innerLoopIndex, outerLoopIndex).length === 0 ? null : gameBoard.getGridSpaceVal(innerLoopIndex, outerLoopIndex)[0]));
                 }
             }
 
-            if (consecutiveMarks.every((mark) => mark === getActivePlayer().playerMark)) {
-            // if (consecutiveMarks.every((mark) => mark === 1)) {
+            if (consecutiveMarks.every((mark) => mark === activePlayer.playerMark)) {
                 isThereAGameWin = true;
-                console.log(`Player ${getActivePlayer()} has won!`);
-                // console.log("A winner!");
-                return isThereAGameWin;
+                console.log(`Player ${activePlayer.playerName} has won!`);
+                // return isThereAGameWin;
             } else {
                 consecutiveMarks = [];
                 continue;
             }
-
-            // console.log(consecutiveMarks);
         };
 
         // diagonal win check
         if (isThereAGameWin === false) {
-            consecutiveMarks.push(...gameBoard.getGridSpaceVal(0, 0));
-            consecutiveMarks.push(...gameBoard.getGridSpaceVal(1, 1));
-            consecutiveMarks.push(...gameBoard.getGridSpaceVal(2, 2));
+            // uppermost left to lowermost right
+            consecutiveMarks.push((gameBoard.getGridSpaceVal(0, 0).length === 0 ? null : gameBoard.getGridSpaceVal(0, 0)[0]));
+            consecutiveMarks.push((gameBoard.getGridSpaceVal(1, 1).length === 0 ? null : gameBoard.getGridSpaceVal(1, 1)[0]));
+            consecutiveMarks.push((gameBoard.getGridSpaceVal(2, 2).length === 0 ? null : gameBoard.getGridSpaceVal(2, 2)[0]));
 
-            if (consecutiveMarks.every((mark) => mark === getActivePlayer().playerMark)) {
-            // if (consecutiveMarks.every((mark) => mark === 1)) {
+            if (consecutiveMarks.every((mark) => mark === activePlayer.playerMark)) {
                 isThereAGameWin = true;
-                console.log(`Player ${getActivePlayer()} has won!`);
-                return isThereAGameWin;
-                // console.log("A winner!");
+                console.log(`Player ${activePlayer.playerName} has won!`);
                 // return isThereAGameWin;
             } else {
+                // uppermost right to bottommost left
                 consecutiveMarks = [];
-                consecutiveMarks.push(...gameBoard.getGridSpaceVal(0, 2));
-                consecutiveMarks.push(...gameBoard.getGridSpaceVal(1, 1));
-                consecutiveMarks.push(...gameBoard.getGridSpaceVal(2, 0));
+                consecutiveMarks.push((gameBoard.getGridSpaceVal(0, 2).length === 0 ? null : gameBoard.getGridSpaceVal(0, 2)[0]));
+                consecutiveMarks.push((gameBoard.getGridSpaceVal(1, 1).length === 0 ? null : gameBoard.getGridSpaceVal(1, 1)[0]));
+                consecutiveMarks.push((gameBoard.getGridSpaceVal(2, 0).length === 0 ? null : gameBoard.getGridSpaceVal(2, 0)[0]));
 
-                if (consecutiveMarks.every((mark) => mark === getActivePlayer().playerMark)) {
-                // if (consecutiveMarks.every((mark) => mark === 1)) {
+                if (consecutiveMarks.every((mark) => mark === activePlayer.playerMark)) {
                     isThereAGameWin = true;
-                    console.log(`Player ${getActivePlayer()} has won!`);
-                    return isThereAGameWin;
-                    // console.log("A winner!");
+                    console.log(`Player ${activePlayer.playerName} has won!`);
+                    // console.log(consecutiveMarks);
                     // return isThereAGameWin;
                 } else {
                     return isThereAGameWin;
@@ -159,14 +141,45 @@ const gameLogicController = (function() {
         }
     };
 
-    const endGameRound = () => `Tic-tac-tover! ${getActivePlayer()} wins the round!`;
+    const endGameRound = (activePlayer) => `Tic-tac-tover! ${activePlayer} wins the round!`;
+
+    // TESTING ZONE
+    const playerOne = createNewPlayer("john", "X");
+    const playerTwo = createNewPlayer("jane", "O");
+    const heWhoStarts = playerOne;
+    
+    const activePlayer = getActivePlayer(playerOne, playerTwo, heWhoStarts);
+    // console.log(heWhoStarts);
+    // console.log(activePlayer);
+
+    // turn 1
+    setActivePlayerMark(playerOne, playerTwo, activePlayer, 0, 2);
+    console.log(gameBoard.grid);
+
+    // turn 2
+    setActivePlayerMark(playerOne, playerTwo, activePlayer, 0, 1);
+    console.log(gameBoard.grid);
+
+    // turn 3
+    setActivePlayerMark(playerOne, playerTwo, activePlayer, 1, 1);
+    console.log(gameBoard.grid);
+
+    // turn 4
+    setActivePlayerMark(playerOne, playerTwo, activePlayer, 2, 1);
+    console.log(gameBoard.grid);
+
+    // turn 5
+    setActivePlayerMark(playerOne, playerTwo, activePlayer, 2,0);
+    console.log(gameBoard.grid);
+    checkForAGameWin("horizontal", activePlayer);
+    // checkForAGameWin("vertical", activePlayer);
 
     return { 
         beginNewGameRound,
         createNewPlayer,
         setStartingPlayer,
         getActivePlayer,
-        makeActivePlayerMove,
+        setActivePlayerMark,
         checkForAGameWin,
         checkForAGameTie,
         endGameRound,
