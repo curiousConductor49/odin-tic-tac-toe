@@ -84,8 +84,8 @@ const gameLogicController = (function() {
 
             if (consecutiveMarks.every((mark) => mark === activePlayer.playerMark)) {
                 isThereAGameWin = true;
-                console.log(`Player ${activePlayer.playerName} has won!`);
-                // return isThereAGameWin;
+                // console.log(`Player ${activePlayer.playerName} has won!`);
+                return isThereAGameWin;
             } else {
                 consecutiveMarks = [];
                 continue;
@@ -101,8 +101,8 @@ const gameLogicController = (function() {
 
             if (consecutiveMarks.every((mark) => mark === activePlayer.playerMark)) {
                 isThereAGameWin = true;
-                console.log(`Player ${activePlayer.playerName} has won!`);
-                // return isThereAGameWin;
+                // console.log(`Player ${activePlayer.playerName} has won!`);
+                return isThereAGameWin;
             } else {
                 // uppermost right to bottommost left
                 consecutiveMarks = [];
@@ -112,9 +112,9 @@ const gameLogicController = (function() {
 
                 if (consecutiveMarks.every((mark) => mark === activePlayer.playerMark)) {
                     isThereAGameWin = true;
-                    console.log(`Player ${activePlayer.playerName} has won!`);
+                    // console.log(`Player ${activePlayer.playerName} has won!`);
                     // console.log(consecutiveMarks);
-                    // return isThereAGameWin;
+                    return isThereAGameWin;
                 } else {
                     return isThereAGameWin;
                 }
@@ -132,7 +132,7 @@ const gameLogicController = (function() {
             }
         }
 
-        if (currentGridValues.length === 9 && checkForAGameWin("horizontal") === false && checkForAGameWin("vertical") === false) {
+        if (currentGridValues.length === 9) {
             console.log("It's a tie! Neither player wins!");
             isThereAGameTie = true;
             return isThereAGameTie;
@@ -153,26 +153,48 @@ const gameLogicController = (function() {
     // console.log(activePlayer);
 
     // turn 1
-    setActivePlayerMark(playerOne, playerTwo, activePlayer, 0, 2);
+    setActivePlayerMark(playerOne, playerTwo, activePlayer, 0, 0);
     console.log(gameBoard.grid);
 
     // turn 2
-    setActivePlayerMark(playerOne, playerTwo, activePlayer, 0, 1);
+    setActivePlayerMark(playerOne, playerTwo, activePlayer, 2, 0);
     console.log(gameBoard.grid);
 
     // turn 3
-    setActivePlayerMark(playerOne, playerTwo, activePlayer, 1, 1);
+    setActivePlayerMark(playerOne, playerTwo, activePlayer, 1, 0);
     console.log(gameBoard.grid);
 
     // turn 4
-    setActivePlayerMark(playerOne, playerTwo, activePlayer, 2, 1);
+    setActivePlayerMark(playerOne, playerTwo, activePlayer, 0, 1);
     console.log(gameBoard.grid);
 
     // turn 5
-    setActivePlayerMark(playerOne, playerTwo, activePlayer, 2,0);
+    setActivePlayerMark(playerOne, playerTwo, activePlayer, 2,1);
     console.log(gameBoard.grid);
-    checkForAGameWin("horizontal", activePlayer);
-    // checkForAGameWin("vertical", activePlayer);
+
+    // turn 6
+    setActivePlayerMark(playerOne, playerTwo, activePlayer, 1,2);
+    console.log(gameBoard.grid);
+
+    // turn 7
+    setActivePlayerMark(playerOne, playerTwo, activePlayer, 0,2);
+    console.log(gameBoard.grid);
+
+    // turn 8
+    setActivePlayerMark(playerOne, playerTwo, activePlayer, 1,1);
+    console.log(gameBoard.grid);
+
+    // turn 9
+    setActivePlayerMark(playerOne, playerTwo, activePlayer, 2,2);
+    console.log(gameBoard.grid);
+
+    if (checkForAGameWin("horizontal", activePlayer) === false) {
+        checkForAGameWin("vertical", activePlayer);
+    }
+    if (checkForAGameWin("horizontal", activePlayer) === false && checkForAGameWin("vertical", activePlayer) === false) {
+        checkForAGameTie();
+    }
+
 
     return { 
         beginNewGameRound,
