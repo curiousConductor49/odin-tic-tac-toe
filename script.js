@@ -1,8 +1,8 @@
 const gameBoard = (function() {
     const grid = [
-        [["X"], ["O"], ["O"]],
-        [["O"], ["X"], ["X"]], 
-        [["O"], [], ["O"]]
+        [[], [], []],
+        [[], [], []], 
+        [[], [], []]
     ];
     const getGridSpaceVal = (rowIndex, colIndex) => grid[rowIndex][colIndex];
     const setGridSpaceVal = (rowIndex, colIndex, gridSpaceVal) => grid[rowIndex][colIndex] = gridSpaceVal;
@@ -34,10 +34,31 @@ const gameLogicController = (function() {
         return startingPlayer;
     }
 
-    const getActivePlayer = (firstPlayer, secondPlayer) => setStartingPlayer(firstPlayer, secondPlayer) === firstPlayer ? secondPlayer : firstPlayer;
+    const getActivePlayer = (firstPlayer, secondPlayer, startingPlayer) => {
+        let currentTurnNum = 1;
 
-    const makeActivePlayerMove = () => {
-        const currentPlayer = getActivePlayer();
+        for (let outerLoopIndex = 0; outerLoopIndex < gameBoard.grid.length; outerLoopIndex++) {    
+            for (let innerLoopIndex = 0; innerLoopIndex < gameBoard.grid[outerLoopIndex].length; innerLoopIndex++) {
+                if (gameBoard.grid[outerLoopIndex][innerLoopIndex].length !== 0) {
+                    currentTurnNum += 1;
+                } else {
+                    continue;
+                }
+            }
+        }
+
+        if (currentTurnNum === 1) {
+            return startingPlayer;
+            // console.log(startingPlayer);
+        } else {
+            const nonStartingPlayer = startingPlayer === firstPlayer ? secondPlayer : firstPlayer;
+            return currentTurnNum % 2 === 0 ? nonStartingPlayer : startingPlayer;
+            // currentTurnNum % 2 === 0 ? console.log(nonStartingPlayer) : console.log(startingPlayer);
+        }        
+    };
+
+    const makeActivePlayerMove = (firstPlayer, secondPlayer, startingPlayer) => {
+        const currentPlayer = getActivePlayer(firstPlayer, secondPlayer, startingPlayer);
         currentPlayer.setPlayerMark();
     };
 
