@@ -211,33 +211,32 @@ const gameLogicController = (function() {
 })()
 
 const gameDisplayController = (function() {
+    // game board
+    const gameBoardGridArea = document.querySelector("#game-board-display");
+    const gameBoardSpaces = [...document.querySelectorAll(".game-board-space")];
+
+    // console.log(gameBoardSpaces);
+    
+    // player form controls
     const playerOneNameInput = document.querySelector("#player-one-name");
     const playerOneMarkInput = document.querySelector("#player-one-mark");
     const playerTwoNameInput = document.querySelector("#player-two-name");
     const playerTwoMarkInput = document.querySelector("#player-two-mark");
     const markInputReminder = document.querySelector("#mark-input-reminder");
     const playerCreationSubmitBtn = document.querySelector("#submit-btn");
-    const gameBoardGridArea = document.querySelector("#gameboard-grid-area");
-
-    // consider reworking this slightly so there's the initial rendering, then a separate function to rerender the latest state of the gameboard i.e. loop over the DOM children of the gameboard grid area, find the corresponding gameboard 2D array's value using the data-attributes of the DOM child element, and set its textContent to the value. We can call this every time a player clicks a grid space.
-    const createAndRenderGameBoard = () => {
+    
+    // renders game board based on 2D array state
+    const renderGameBoard = () => {
         for (let outerLoopIndex = 0; outerLoopIndex < gameBoard.grid.length; outerLoopIndex++) {    
             for (let innerLoopIndex = 0; innerLoopIndex < gameBoard.grid[outerLoopIndex].length; innerLoopIndex++) {
-                const gridSpaceSquare = document.createElement("button");
-
-                gridSpaceSquare.setAttribute("data-row", outerLoopIndex);
-                gridSpaceSquare.setAttribute("data-column", innerLoopIndex);
-
-                gridSpaceSquare.textContent = gameBoard.grid[outerLoopIndex][innerLoopIndex].length === 0 ? "" : gameBoard.grid[outerLoopIndex][innerLoopIndex];
-                gameBoardGridArea.append(gridSpaceSquare);
-
-                // this is just to see the divs, delete later
-                // gridSpaceSquare.style.backgroundColor = "blue";
-                // gridSpaceSquare.style.height = "100px";
-                // gridSpaceSquare.style.width = "100px";
+                const currentGameBoardSpace = gameBoardSpaces.find((space) => parseInt(space.dataset.row) === outerLoopIndex && parseInt(space.dataset.col) === innerLoopIndex);
+                console.log(currentGameBoardSpace);
+                currentGameBoardSpace.textContent = gameBoard.grid[outerLoopIndex][innerLoopIndex][0];
             }
         }
     }
+
+    // renderGameBoard();
     
     const playerCreationFormHandler = () => {
         if (playerOneMarkInput.value === playerTwoMarkInput.value) {
