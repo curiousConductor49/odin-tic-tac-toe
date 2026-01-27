@@ -41,7 +41,7 @@ h1 {
     margin-block: 40px;
 }
 
-#gameboard-grid-area {
+#game-board-display {
     max-width: fit-content;
     margin-inline: auto;
     padding: 10px;
@@ -51,7 +51,7 @@ h1 {
     grid-template-columns: repeat(3, 1fr);
 }
 
-#gameboard-grid-area div {
+.game-board-space  {
     height: 100px;
     width: 100px;
     border: 2px solid plum;
