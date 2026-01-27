@@ -145,6 +145,77 @@ const gameLogicController = (function() {
     // declares the winning player
     const announceGameWinner = (activePlayer) => `Tic-tac-tover! ${activePlayer} wins the round!`;
 
+    return { 
+        clearGameBoardGrid,
+        createNewPlayer,
+        setStartingPlayer,
+        getActivePlayer,
+        setActivePlayerMark,
+        checkForAGameWin,
+        checkForAGameTie,
+        announceGameWinner,
+    };
+})()
+
+const gameDisplayController = (function() {
+    // game board DOM elements
+    const gameBoardDisplay = document.querySelector("#game-board-display");
+    const gameBoardSpaces = [...document.querySelectorAll(".game-board-space")];
+
+    // console.log(gameBoardSpaces);
+    
+    // player form controls
+    const playerOneNameInput = document.querySelector("#player-one-name");
+    const playerOneMarkInput = document.querySelector("#player-one-mark");
+    const playerTwoNameInput = document.querySelector("#player-two-name");
+    const playerTwoMarkInput = document.querySelector("#player-two-mark");
+    const markInputReminder = document.querySelector("#mark-input-reminder");
+    const playerCreationSubmitBtn = document.querySelector("#submit-btn");
+    
+    // renders game board based on 2D array state
+    const renderGameBoard = () => {
+        for (let outerLoopIndex = 0; outerLoopIndex < gameBoard.grid.length; outerLoopIndex++) {    
+            for (let innerLoopIndex = 0; innerLoopIndex < gameBoard.grid[outerLoopIndex].length; innerLoopIndex++) {
+                const currentGameBoardSpace = gameBoardSpaces.find((space) => parseInt(space.dataset.row) === outerLoopIndex && parseInt(space.dataset.col) === innerLoopIndex);
+                // console.log(currentGameBoardSpace);
+                currentGameBoardSpace.textContent = gameBoard.grid[outerLoopIndex][innerLoopIndex][0];
+            }
+        }
+    }    
+    
+    const playerCreationFormHandler = () => {
+        if (playerOneMarkInput.value === playerTwoMarkInput.value) {
+            markInputReminder.textContent = "Players must have different marks!";
+        } else {
+            markInputReminder.textContent = "";
+            playerCreationSubmitBtn.setAttribute("disabled", "");
+            gameLogicController.beginNewGameRound();
+
+            const playerOne = gameLogicController.createNewPlayer(playerOneNameInput.value, playerOneMarkInput.value);
+            const playerTwo = gameLogicController.createNewPlayer(playerTwoNameInput.value, playerTwoMarkInput.value);
+
+            return { playerOne, playerTwo };
+        }
+    } 
+
+    playerCreationSubmitBtn.addEventListener("click", (event) => {
+        event.preventDefault();
+        // const beginner = gameLogicController.setStartingPlayer(playerCreationFormHandler()["playerOne"], playerCreationFormHandler()["playerTwo"]);
+        // const active = gameLogicController.getActivePlayer(playerCreationFormHandler()["playerOne"], playerCreationFormHandler()["playerTwo"]);
+        // console.log(beginner);
+        // console.log(active);
+    });
+
+    gameBoardDisplay.addEventListener("click", (event) => {
+        // set active player's mark as the textContent of the click target
+        event.target.textContent = "X";
+        // update the 2D array grid
+        gameBoard.grid[event.target.dataset.row][event.target.dataset.col] = ["X"];
+        // use the state of the 2D array grid to render the game board
+        renderGameBoard();
+        console.log(gameBoard.grid);
+    })
+
     // TESTING ZONE (DELETE LATER)
     // const playerOne = createNewPlayer("john", "X");
     // const playerTwo = createNewPlayer("jane", "O");
@@ -196,84 +267,16 @@ const gameLogicController = (function() {
     // if (checkForAGameWin("horizontal", activePlayer) === false && checkForAGameWin("vertical", activePlayer) === false) {
     //     checkForAGameTie();
     // }
-
-
-    return { 
-        clearGameBoardGrid,
-        createNewPlayer,
-        setStartingPlayer,
-        getActivePlayer,
-        setActivePlayerMark,
-        checkForAGameWin,
-        checkForAGameTie,
-        announceGameWinner,
-    };
-})()
-
-const gameDisplayController = (function() {
-    // game board
-    const gameBoardGridArea = document.querySelector("#game-board-display");
-    const gameBoardSpaces = [...document.querySelectorAll(".game-board-space")];
-
-    // console.log(gameBoardSpaces);
-    
-    // player form controls
-    const playerOneNameInput = document.querySelector("#player-one-name");
-    const playerOneMarkInput = document.querySelector("#player-one-mark");
-    const playerTwoNameInput = document.querySelector("#player-two-name");
-    const playerTwoMarkInput = document.querySelector("#player-two-mark");
-    const markInputReminder = document.querySelector("#mark-input-reminder");
-    const playerCreationSubmitBtn = document.querySelector("#submit-btn");
-    
-    // renders game board based on 2D array state
-    const renderGameBoard = () => {
-        for (let outerLoopIndex = 0; outerLoopIndex < gameBoard.grid.length; outerLoopIndex++) {    
-            for (let innerLoopIndex = 0; innerLoopIndex < gameBoard.grid[outerLoopIndex].length; innerLoopIndex++) {
-                const currentGameBoardSpace = gameBoardSpaces.find((space) => parseInt(space.dataset.row) === outerLoopIndex && parseInt(space.dataset.col) === innerLoopIndex);
-                console.log(currentGameBoardSpace);
-                currentGameBoardSpace.textContent = gameBoard.grid[outerLoopIndex][innerLoopIndex][0];
-            }
-        }
-    }
-
-    // renderGameBoard();
-    
-    const playerCreationFormHandler = () => {
-        if (playerOneMarkInput.value === playerTwoMarkInput.value) {
-            markInputReminder.textContent = "Players must have different marks!";
-        } else {
-            markInputReminder.textContent = "";
-            playerCreationSubmitBtn.setAttribute("disabled", "");
-            gameLogicController.beginNewGameRound();
-
-            const playerOne = gameLogicController.createNewPlayer(playerOneNameInput.value, playerOneMarkInput.value);
-            const playerTwo = gameLogicController.createNewPlayer(playerTwoNameInput.value, playerTwoMarkInput.value);
-
-            return { playerOne, playerTwo };
-        }
-    } 
-
-    // *** WE ARE HERE!!! ***
-    playerCreationSubmitBtn.addEventListener("click", (event) => {
-        event.preventDefault();
-        // const beginner = gameLogicController.setStartingPlayer(playerCreationFormHandler()["playerOne"], playerCreationFormHandler()["playerTwo"]);
-        // const active = gameLogicController.getActivePlayer(playerCreationFormHandler()["playerOne"], playerCreationFormHandler()["playerTwo"]);
-        // console.log(beginner);
-        // console.log(active);
-    });
 })()
 
 // pseudocode!!
-// write the functions in the gameDisplayController IIFE that allow players to add marks to a specific gameboard grid space by interacting with the right DOM element
-
-// CURRENT OBJECTIVE --> connect the gameboard grid array to its DOM representation.
-// start by split-reworking the function to render its contents (should be a function to build out the grid, then a separate one to be called per game turn to "refresh" the screen)
+// CURRENT OBJECTIVE --> test and debug the gameplay loop: create a pair of players w/ the form, designate the starting player, and ensure the active player can add a mark to a space in the game board grid via clicking on its the respective DOM element
 
 // ** TO-DO, TO-DO, TO-DO-DO-DO-DO-DOOOOO... ***
-// set an event listener on the gameBoardGridArea to use event bubbling so a listener is set on all its children (aka the gameboard spaces)
+// set an event listener on the game board display to use event bubbling so a listener is set on all its children (aka the gameboard spaces)
 // we pass it a callback function, in which we:
-    // get the row and column attributes of the target from the event (ought to be a click)
-    // check if the target's textContent is already occupied
-        // if so then simply return
-        // else, set the target's textContent to the active player's mark (see above note about rerendering), update the corresponding 2D array position in the gameboard grid array with the active player's mark, and check for a win and tie
+    // get the row and column attributes of the event target
+    // call the function to set the active player's mark (which updates the corresponding 2D array position in the 2D array grid with the active player's mark)
+    // call the function to render the game board based on the newly updated 2D array grid
+    // check for a win and a tie
     // if a tie or win is found, then end the game round and enable the play button + form inputs again, allowing the process to repeat upon a click
