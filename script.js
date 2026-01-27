@@ -1,4 +1,5 @@
 const gameBoard = (function() {
+    // create and return an obj with a 2D array and methods to interact with the grid
     const grid = [
         [[], [], []],
         [[], [], []], 
@@ -11,12 +12,13 @@ const gameBoard = (function() {
 })()
 
 const gameLogicController = (function() {
-    const beginNewGameRound = () => {
+    // clears the game board grid by resetting it to an empty 2D array
+    const clearGameBoardGrid = () => {
         for (let i = 0; i < gameBoard.grid.length; i++) {    
             gameBoard.grid[i] = [[], [], []];
         }
     };
-    
+    // creates a new player obj with a name, mark, and method to add a mark to the game board grid
     const createNewPlayer = (selectedName, selectedMark) => {
         const playerName = selectedName;
         const playerMark = selectedMark;
@@ -25,15 +27,15 @@ const gameLogicController = (function() {
 
         return { playerName, playerMark, setPlayerMark };
     }
-
+    // randomly picks the starting player
     const setStartingPlayer = (firstPlayer, secondPlayer) => {
         const players = [firstPlayer, secondPlayer];
         const randomIndex = Math.floor(Math.random() * 2);
         const startingPlayer = players[randomIndex];
-
+        // should convey at start of game who's the starting player, and during turns, whose turn it is
         return startingPlayer;
     }
-
+    // determines the active player by checking whose turn it is via the starting player and the turn number (even or odd) thereafter
     const getActivePlayer = (firstPlayer, secondPlayer, startingPlayer) => {
         let currentTurnNum = 1;
 
@@ -56,7 +58,7 @@ const gameLogicController = (function() {
             // currentTurnNum % 2 === 0 ? console.log(nonStartingPlayer) : console.log(startingPlayer);
         }        
     };
-
+    // adds the mark of the active player to the game board grid
     const setActivePlayerMark = (firstPlayer, secondPlayer, startingPlayer, rowIndex, colIndex) => {
         const currentPlayer = getActivePlayer(firstPlayer, secondPlayer, startingPlayer);
         if (gameBoard.grid[rowIndex][colIndex].length !== 0) {
@@ -66,7 +68,7 @@ const gameLogicController = (function() {
             currentPlayer.setPlayerMark(rowIndex, colIndex, currentPlayer.playerMark);
         }
     };
-
+    // checks for a game win in four directions: horizontal win, vertical win, and two diagonals
     // call w/ horizontal parameter first, then w/ vertical if a winner hasn't been found
     const checkForAGameWin = (loopDirection, activePlayer) => {
         let consecutiveMarks = [];
@@ -121,7 +123,7 @@ const gameLogicController = (function() {
             }
         }
     };
-
+    // checks for a game tie (i.e. filled game board w/o a win)
     const checkForAGameTie = () => {
         let isThereAGameTie = false;
         const currentGridValues = [];
@@ -140,10 +142,10 @@ const gameLogicController = (function() {
             return isThereAGameTie;
         }
     };
+    // declares the winning player
+    const announceGameWinner = (activePlayer) => `Tic-tac-tover! ${activePlayer} wins the round!`;
 
-    const endGameRound = (activePlayer) => `Tic-tac-tover! ${activePlayer} wins the round!`;
-
-    // TESTING ZONE
+    // TESTING ZONE (DELETE LATER)
     // const playerOne = createNewPlayer("john", "X");
     // const playerTwo = createNewPlayer("jane", "O");
     // const heWhoStarts = playerOne;
@@ -197,14 +199,14 @@ const gameLogicController = (function() {
 
 
     return { 
-        beginNewGameRound,
+        clearGameBoardGrid,
         createNewPlayer,
         setStartingPlayer,
         getActivePlayer,
         setActivePlayerMark,
         checkForAGameWin,
         checkForAGameTie,
-        endGameRound,
+        announceGameWinner,
     };
 })()
 
