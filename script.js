@@ -61,7 +61,7 @@ const gameLogicController = (function() {
     // adds the mark of the active player to the game board grid
     const setActivePlayerMark = (firstPlayer, secondPlayer, startingPlayer, rowIndex, colIndex) => {
         const currentPlayer = getActivePlayer(firstPlayer, secondPlayer, startingPlayer);
-        if (gameBoard.grid[rowIndex][colIndex].length !== 0) {
+        if (gameBoard.grid[rowIndex][colIndex].length > 0) {
             console.log("Sorry, space is taken!");
             // have a paragraph whose textContent is populated with a message informing the players the space is already taken
         } else {
@@ -206,16 +206,12 @@ const gameDisplayController = (function() {
         playerOne = createPlayersFromForm()["playerOne"];
         playerTwo = createPlayersFromForm()["playerTwo"];
         startingPlayer = gameLogicController.setStartingPlayer(playerOne, playerTwo);
-        // console.log(playerOne, playerTwo, startingPlayer);
+        console.log(playerOne, playerTwo, startingPlayer);
     });
 
     gameBoardDisplay.addEventListener("click", (event) => {
-        // set active player's mark as the textContent of the click target
-        // console.log(startingPlayer);
-        // event.target.textContent = gameLogicController.setActivePlayerMark(playerOne, playerTwo, startingPlayer, 0, 0);
-        // event.target.textContent = "X";
-        // update the 2D array grid
-        // gameBoard.grid[event.target.dataset.row][event.target.dataset.col] = ["X"];
+        // update the 2D array grid and set active player's mark as the textContent of the click target
+        event.target.textContent = gameLogicController.setActivePlayerMark(playerOne, playerTwo, startingPlayer, event.target.dataset.row, event.target.dataset.col);
         // use the state of the 2D array grid to render the game board
         renderGameBoard();
         console.log(gameBoard.grid);
