@@ -165,12 +165,16 @@ const gameDisplayController = (function() {
     // console.log(gameBoardSpaces);
     
     // player form controls
+    const playerCreationDialog = document.querySelector("#player-creation-dialog");
     const playerOneNameInput = document.querySelector("#player-one-name");
     const playerOneMarkInput = document.querySelector("#player-one-mark");
     const playerTwoNameInput = document.querySelector("#player-two-name");
     const playerTwoMarkInput = document.querySelector("#player-two-mark");
     const markInputReminder = document.querySelector("#mark-input-reminder");
     const playerCreationSubmitBtn = document.querySelector("#submit-btn");
+    // variables to store player objects
+    let playerOne;
+    let playerTwo;
     
     // renders game board based on 2D array state
     const renderGameBoard = () => {
@@ -183,7 +187,7 @@ const gameDisplayController = (function() {
         }
     }    
     
-    const playerCreationFormHandler = () => {
+    const createPlayersFromForm = () => {
         if (playerOneMarkInput.value === playerTwoMarkInput.value) {
             markInputReminder.textContent = "Players must have different marks!";
         } else {
@@ -194,18 +198,25 @@ const gameDisplayController = (function() {
 
             return { playerOne, playerTwo };
         }
-    } 
+    }
+
+    playerCreationDialog.showModal();
 
     playerCreationSubmitBtn.addEventListener("click", (event) => {
         event.preventDefault();
-        playerCreationSubmitBtn.setAttribute("disabled", "");
         gameLogicController.clearGameBoardGrid();
-        // return playerCreationFormHandler();
+        playerCreationDialog.close(JSON.stringify(createPlayersFromForm()));
     });
+
+  playerCreationDialog.addEventListener("close", () => {
+        playerOne = JSON.parse(playerCreationDialog.returnValue)["playerOne"];
+        playerTwo = JSON.parse(playerCreationDialog.returnValue)["playerTwo"];
+        // console.log(JSON.parse(playerCreationDialog.returnValue));
+    })
 
     gameBoardDisplay.addEventListener("click", (event) => {
         // set active player's mark as the textContent of the click target
-        event.target.textContent = "X";
+        // event.target.textContent = "X";
         // update the 2D array grid
         gameBoard.grid[event.target.dataset.row][event.target.dataset.col] = ["X"];
         // use the state of the 2D array grid to render the game board
