@@ -11,40 +11,38 @@
     <main>
 
         <section class="player-creation-container">
-            <dialog id="player-creation-dialog">
-                <form action="">
-                    <fieldset class="player-one-creation">
-                        <legend>Player One, select your name and mark.</legend>
-                        <label for="player-one-name">
-                            Name:
-                            <input type="text" id="player-one-name" required>
-                        </label>
-                        <label for="player-one-mark">
-                            Mark:
-                            <select id="player-one-mark" required>
-                                <option value="x">x</option>
-                                <option value="o">o</option>
-                            </select>
-                        </label>
-                    </fieldset>
-                    <fieldset class="player-two-creation">
-                        <legend>Player Two, select your name and mark.</legend>
-                        <label for="player-two-name">
-                            Name:
-                            <input type="text" id="player-two-name" required>
-                        </label>
-                        <label for="player-two-mark">
-                            Mark:
-                            <select id="player-two-mark" required>
-                                <option value="x">x</option>
-                                <option value="o">o</option>
-                            </select>
-                        </label>
-                    </fieldset>
-                    <p id="mark-input-reminder"></p>
-                    <button id="submit-btn">Create players</button>
-                </form>
-            </dialog>
+            <form action="">
+                <fieldset class="player-one-creation">
+                    <legend>Player One, select your name and mark.</legend>
+                    <label for="player-one-name">
+                        Name:
+                        <input type="text" id="player-one-name" required>
+                    </label>
+                    <label for="player-one-mark">
+                        Mark:
+                        <select id="player-one-mark" required>
+                            <option value="x">x</option>
+                            <option value="o">o</option>
+                        </select>
+                    </label>
+                </fieldset>
+                <fieldset class="player-two-creation">
+                    <legend>Player Two, select your name and mark.</legend>
+                    <label for="player-two-name">
+                        Name:
+                        <input type="text" id="player-two-name" required>
+                    </label>
+                    <label for="player-two-mark">
+                        Mark:
+                        <select id="player-two-mark" required>
+                            <option value="x">x</option>
+                            <option value="o">o</option>
+                        </select>
+                    </label>
+                </fieldset>
+                <p id="mark-input-reminder"></p>
+                <button id="submit-btn">Create players</button>
+            </form>
         </section>
 
         <section class="game-container">
