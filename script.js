@@ -2,7 +2,7 @@ const gameBoard = (function() {
     // create and return an obj with a 2D array and methods to interact with the grid
     const grid = [
         [[], [], []],
-        [[], [], []], 
+        [[], ["X"], []], 
         [[], [], []]
     ];
     const getGridSpaceVal = (rowIndex, colIndex) => grid[rowIndex][colIndex];
@@ -188,8 +188,6 @@ const gameDisplayController = (function() {
             markInputReminder.textContent = "Players must have different marks!";
         } else {
             markInputReminder.textContent = "";
-            playerCreationSubmitBtn.setAttribute("disabled", "");
-            gameLogicController.beginNewGameRound();
 
             const playerOne = gameLogicController.createNewPlayer(playerOneNameInput.value, playerOneMarkInput.value);
             const playerTwo = gameLogicController.createNewPlayer(playerTwoNameInput.value, playerTwoMarkInput.value);
@@ -200,10 +198,9 @@ const gameDisplayController = (function() {
 
     playerCreationSubmitBtn.addEventListener("click", (event) => {
         event.preventDefault();
-        // const beginner = gameLogicController.setStartingPlayer(playerCreationFormHandler()["playerOne"], playerCreationFormHandler()["playerTwo"]);
-        // const active = gameLogicController.getActivePlayer(playerCreationFormHandler()["playerOne"], playerCreationFormHandler()["playerTwo"]);
-        // console.log(beginner);
-        // console.log(active);
+        playerCreationSubmitBtn.setAttribute("disabled", "");
+        gameLogicController.clearGameBoardGrid();
+        // return playerCreationFormHandler();
     });
 
     gameBoardDisplay.addEventListener("click", (event) => {
