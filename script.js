@@ -21,9 +21,9 @@ const gameLogicController = (function() {
     // creates a new player obj with a name, mark, and method to add a mark to the game board grid
     const createNewPlayer = (selectedName, selectedMark) => {
         const playerName = selectedName;
-        const playerMark = selectedMark;
+        const playerMark = selectedMark.toUpperCase();
 
-        const setPlayerMark = (rowIndex, colIndex) => gameBoard.setGridSpaceVal(rowIndex, colIndex, playerMark);
+        const setPlayerMark = (rowIndex, colIndex, playerMark) => gameBoard.setGridSpaceVal(rowIndex, colIndex, playerMark);
 
         return { playerName, playerMark, setPlayerMark };
     }
@@ -165,7 +165,6 @@ const gameDisplayController = (function() {
     // console.log(gameBoardSpaces);
     
     // player form controls
-    const playerCreationDialog = document.querySelector("#player-creation-dialog");
     const playerOneNameInput = document.querySelector("#player-one-name");
     const playerOneMarkInput = document.querySelector("#player-one-mark");
     const playerTwoNameInput = document.querySelector("#player-two-name");
@@ -175,6 +174,7 @@ const gameDisplayController = (function() {
     // variables to store player objects
     let playerOne;
     let playerTwo;
+    let startingPlayer;
     
     // renders game board based on 2D array state
     const renderGameBoard = () => {
@@ -200,25 +200,22 @@ const gameDisplayController = (function() {
         }
     }
 
-    playerCreationDialog.showModal();
-
     playerCreationSubmitBtn.addEventListener("click", (event) => {
         event.preventDefault();
         gameLogicController.clearGameBoardGrid();
-        playerCreationDialog.close(JSON.stringify(createPlayersFromForm()));
+        playerOne = createPlayersFromForm()["playerOne"];
+        playerTwo = createPlayersFromForm()["playerTwo"];
+        startingPlayer = gameLogicController.setStartingPlayer(playerOne, playerTwo);
+        // console.log(playerOne, playerTwo, startingPlayer);
     });
-
-  playerCreationDialog.addEventListener("close", () => {
-        playerOne = JSON.parse(playerCreationDialog.returnValue)["playerOne"];
-        playerTwo = JSON.parse(playerCreationDialog.returnValue)["playerTwo"];
-        // console.log(JSON.parse(playerCreationDialog.returnValue));
-    })
 
     gameBoardDisplay.addEventListener("click", (event) => {
         // set active player's mark as the textContent of the click target
+        // console.log(startingPlayer);
+        // event.target.textContent = gameLogicController.setActivePlayerMark(playerOne, playerTwo, startingPlayer, 0, 0);
         // event.target.textContent = "X";
         // update the 2D array grid
-        gameBoard.grid[event.target.dataset.row][event.target.dataset.col] = ["X"];
+        // gameBoard.grid[event.target.dataset.row][event.target.dataset.col] = ["X"];
         // use the state of the 2D array grid to render the game board
         renderGameBoard();
         console.log(gameBoard.grid);
