@@ -248,7 +248,10 @@ const gameDisplayController = (function() {
     });
 })()
 
-// 5.0 CHECKLIST
-// CURRENT OBJECTIVE --> convey necessary info (whose turn it is, who won)
-
-// 6.0 CHECKLIST
+// FINAL CHECKLIST
+// CURRENT OBJECTIVE --> Debug so gameplay loop is smooth (back-to-back games have a problem with the game board event listener, form inputs aren't working w/ the required attribute)
+// Clean up comments and console.logs
+// Ensure variable and function names are sound
+// Look for ways to refactor or reorganize
+// Style w/ CSS
+// Update README
