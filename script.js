@@ -218,6 +218,7 @@ const gameDisplayController = (function() {
         // check for a win or a tie
         if (gameLogicController.checkForAGameWin("horizontal", activePlayer) || gameLogicController.checkForAGameWin("vertical", activePlayer)) {
             // announce a win (horizontal or vertical)
+            console.log("nanabear");
             displayMessage.textContent = gameLogicController.announceGameWinner(activePlayer);
             isThereAGameOver = true;
         } else if (gameLogicController.checkForAGameWin("horizontal", activePlayer) === false && gameLogicController.checkForAGameWin("vertical", activePlayer) === false && gameLogicController.checkForAGameTie()) {
@@ -228,7 +229,6 @@ const gameDisplayController = (function() {
 
         if (isThereAGameOver) {
             event.currentTarget.removeEventListener("click", playAGame);
-            displayMessage.textContent = "";
             gameLogicController.beginANewGame(playerOne, playerOneNameInput, playerTwo, playerTwoNameInput, startingPlayer, isThereAGameOver, playerCreationSubmitBtn);
         }
     }
