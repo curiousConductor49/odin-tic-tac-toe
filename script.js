@@ -217,28 +217,30 @@ const gameDisplayController = (function() {
                 isThereAGameOver = gameLogicController.checkForAGameTie();
             }
         }
-        
+
         if (isThereAGameOver) {
             event.currentTarget.removeEventListener("click", playAGame);
         }
     }
 
-
     playerCreationSubmitBtn.addEventListener("click", (event) => {
         event.preventDefault();
+        playerCreationSubmitBtn.setAttribute("disabled", "");
+
         gameLogicController.clearGameBoardGrid();
+
         playerOne = createPlayersFromForm()["playerOne"];
         playerTwo = createPlayersFromForm()["playerTwo"];
         startingPlayer = gameLogicController.setStartingPlayer(playerOne, playerTwo);
-        console.log(playerOne, playerTwo, startingPlayer);
-    });
 
-    gameBoardDisplay.addEventListener("click", playAGame);
+        console.log(playerOne, playerTwo, startingPlayer);
+
+        gameBoardDisplay.addEventListener("click", playAGame);
+    });
 })()
 
 // 5.0 CHECKLIST
-// CURRENT OBJECTIVE --> Remove event listener from game board upon game end (win or tie)
-// Allow players to re/start a game via a button
+// CURRENT OBJECTIVE --> allow players to re/start a game via a button
 // Convey necessary info (whose turn it is, who won)
 
 // 6.0 CHECKLIST
