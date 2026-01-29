@@ -86,7 +86,7 @@ const gameLogicController = (function() {
 
             if (consecutiveMarks.every((mark) => mark === activePlayer.playerMark)) {
                 isThereAGameWin = true;
-                // console.log(`Player ${activePlayer.playerName} has won!`);
+                console.log(`Player ${activePlayer.playerName} has won!`);
                 return isThereAGameWin;
             } else {
                 consecutiveMarks = [];
@@ -103,7 +103,7 @@ const gameLogicController = (function() {
 
             if (consecutiveMarks.every((mark) => mark === activePlayer.playerMark)) {
                 isThereAGameWin = true;
-                // console.log(`Player ${activePlayer.playerName} has won!`);
+                console.log(`Player ${activePlayer.playerName} has won!`);
                 return isThereAGameWin;
             } else {
                 // uppermost right to bottommost left
@@ -114,7 +114,7 @@ const gameLogicController = (function() {
 
                 if (consecutiveMarks.every((mark) => mark === activePlayer.playerMark)) {
                     isThereAGameWin = true;
-                    // console.log(`Player ${activePlayer.playerName} has won!`);
+                    console.log(`Player ${activePlayer.playerName} has won!`);
                     // console.log(consecutiveMarks);
                     return isThereAGameWin;
                 } else {
@@ -210,74 +210,23 @@ const gameDisplayController = (function() {
     });
 
     gameBoardDisplay.addEventListener("click", (event) => {
+        // determine the active player
+        const activePlayer = gameLogicController.getActivePlayer(playerOne, playerTwo, startingPlayer);
         // update the 2D array grid and set active player's mark as the textContent of the click target
         event.target.textContent = gameLogicController.setActivePlayerMark(playerOne, playerTwo, startingPlayer, event.target.dataset.row, event.target.dataset.col);
         // use the state of the 2D array grid to render the game board
         renderGameBoard();
         console.log(gameBoard.grid);
+        // check for a win or a tie
+        if (gameLogicController.checkForAGameWin("horizontal", activePlayer) === false) {
+            gameLogicController.checkForAGameWin("vertical", activePlayer);
+        }
+        if (gameLogicController.checkForAGameWin("horizontal", activePlayer) === false && gameLogicController.checkForAGameWin("vertical", activePlayer) === false) {
+            gameLogicController.checkForAGameTie();
+        }
     })
-
-    // TESTING ZONE (DELETE LATER)
-    // const playerOne = createNewPlayer("john", "X");
-    // const playerTwo = createNewPlayer("jane", "O");
-    // const heWhoStarts = playerOne;
-    
-    // const activePlayer = getActivePlayer(playerOne, playerTwo, heWhoStarts);
-    // // console.log(heWhoStarts);
-    // // console.log(activePlayer);
-
-    // // turn 1
-    // setActivePlayerMark(playerOne, playerTwo, activePlayer, 0, 0);
-    // console.log(gameBoard.grid);
-
-    // // turn 2
-    // setActivePlayerMark(playerOne, playerTwo, activePlayer, 2, 0);
-    // console.log(gameBoard.grid);
-
-    // // turn 3
-    // setActivePlayerMark(playerOne, playerTwo, activePlayer, 1, 0);
-    // console.log(gameBoard.grid);
-
-    // // turn 4
-    // setActivePlayerMark(playerOne, playerTwo, activePlayer, 0, 1);
-    // console.log(gameBoard.grid);
-
-    // // turn 5
-    // setActivePlayerMark(playerOne, playerTwo, activePlayer, 2,1);
-    // console.log(gameBoard.grid);
-
-    // // turn 6
-    // setActivePlayerMark(playerOne, playerTwo, activePlayer, 1,2);
-    // console.log(gameBoard.grid);
-
-    // // turn 7
-    // setActivePlayerMark(playerOne, playerTwo, activePlayer, 0,2);
-    // console.log(gameBoard.grid);
-
-    // // turn 8
-    // setActivePlayerMark(playerOne, playerTwo, activePlayer, 1,1);
-    // console.log(gameBoard.grid);
-
-    // // turn 9
-    // setActivePlayerMark(playerOne, playerTwo, activePlayer, 2,2);
-    // console.log(gameBoard.grid);
-
-    // if (checkForAGameWin("horizontal", activePlayer) === false) {
-    //     checkForAGameWin("vertical", activePlayer);
-    // }
-    // if (checkForAGameWin("horizontal", activePlayer) === false && checkForAGameWin("vertical", activePlayer) === false) {
-    //     checkForAGameTie();
-    // }
 })()
 
 // pseudocode!!
-// CURRENT OBJECTIVE --> test and debug the gameplay loop: create a pair of players w/ the form, designate the starting player, and ensure the active player can add a mark to a space in the game board grid via clicking on its the respective DOM element
-
-// ** TO-DO, TO-DO, TO-DO-DO-DO-DO-DOOOOO... ***
-// set an event listener on the game board display to use event bubbling so a listener is set on all its children (aka the gameboard spaces)
-// we pass it a callback function, in which we:
-    // get the row and column attributes of the event target
-    // call the function to set the active player's mark (which updates the corresponding 2D array position in the 2D array grid with the active player's mark)
-    // call the function to render the game board based on the newly updated 2D array grid
-    // check for a win and a tie
-    // if a tie or win is found, then end the game round and enable the play button + form inputs again, allowing the process to repeat upon a click
+// CURRENT OBJECTIVE --> test and debug the gameplay loop, currently at how we detect a win or tie
+// if a tie or win is found, then end the game round and enable the play button + form inputs again, allowing the process to repeat upon a click
