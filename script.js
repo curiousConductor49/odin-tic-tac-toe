@@ -153,7 +153,7 @@ const gameLogicController = (function() {
         }
     };
     // declares the winning player
-    const announceGameWinner = (activePlayer) => `Tic-tac-tover! ${activePlayer} wins the round!`;
+    const announceGameWinner = (activePlayer) => `Tic-tac-tover! ${activePlayer.playerName} wins the round!`;
 
     return {
         beginANewGame,
@@ -171,6 +171,7 @@ const gameDisplayController = (function() {
     // game board DOM elements
     const gameBoardDisplay = document.querySelector("#game-board-display");
     const gameBoardSpaces = [...document.querySelectorAll(".game-board-space")];
+    const displayMessage = document.querySelector("#display-message");
 
     // console.log(gameBoardSpaces);
     
@@ -207,29 +208,27 @@ const gameDisplayController = (function() {
     const playAGame = (event) => {
         // determine the active player
         const activePlayer = gameLogicController.getActivePlayer(playerOne, playerTwo, startingPlayer);
+        // update the display message
+        displayMessage.textContent = `Player ${activePlayer.playerName}'s turn`;
         // update the 2D array grid with the active player's mark and set it as the textContent of the click target
         event.target.textContent = gameLogicController.setActivePlayerMark(playerOne, playerTwo, startingPlayer, event.target.dataset.row, event.target.dataset.col);
         // use the state of the 2D array grid to render the game board
         renderGameBoard();
         console.log(gameBoard.grid);
         // check for a win or a tie
-        isThereAGameOver = gameLogicController.checkForAGameWin("horizontal", activePlayer);
-        if (isThereAGameOver) {
-            // announce a win (horizontal)
-            gameLogicController.announceGameWinner(activePlayer);
-        } else {
-            isThereAGameOver = gameLogicController.checkForAGameWin("vertical", activePlayer);
-            if (isThereAGameOver) {
-                // announce a win (vertical)
-                gameLogicController.announceGameWinner(activePlayer);
-            } else {
-                // check for and announce a tie (no other possibility)
-                isThereAGameOver = gameLogicController.checkForAGameTie();
-            }
+        if (gameLogicController.checkForAGameWin("horizontal", activePlayer) || gameLogicController.checkForAGameWin("vertical", activePlayer)) {
+            // announce a win (horizontal or vertical)
+            displayMessage.textContent = gameLogicController.announceGameWinner(activePlayer);
+            isThereAGameOver = true;
+        } else if (gameLogicController.checkForAGameWin("horizontal", activePlayer) === false && gameLogicController.checkForAGameWin("vertical", activePlayer) === false && gameLogicController.checkForAGameTie()) {
+            // announce a tie (no other possibility)
+            displayMessage.textContent = "It's a tie! Neither player wins!";
+            isThereAGameOver = true;
         }
 
         if (isThereAGameOver) {
             event.currentTarget.removeEventListener("click", playAGame);
+            displayMessage.textContent = "";
             gameLogicController.beginANewGame(playerOne, playerOneNameInput, playerTwo, playerTwoNameInput, startingPlayer, isThereAGameOver, playerCreationSubmitBtn);
         }
     }
@@ -250,7 +249,6 @@ const gameDisplayController = (function() {
 })()
 
 // 5.0 CHECKLIST
-// CURRENT OBJECTIVE --> allow players to re/start a game via a button
-// Convey necessary info (whose turn it is, who won)
+// CURRENT OBJECTIVE --> convey necessary info (whose turn it is, who won)
 
 // 6.0 CHECKLIST
