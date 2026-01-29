@@ -2,7 +2,7 @@ const gameBoard = (function() {
     // create and return an obj with a 2D array and methods to interact with the grid
     const grid = [
         [[], [], []],
-        [[], ["X"], []], 
+        [[], [], []], 
         [[], [], []]
     ];
     const getGridSpaceVal = (rowIndex, colIndex) => grid[rowIndex][colIndex];
@@ -12,11 +12,21 @@ const gameBoard = (function() {
 })()
 
 const gameLogicController = (function() {
-    // clears the game board grid by resetting it to an empty 2D array
-    const clearGameBoardGrid = () => {
+    // begins a new game round
+    const beginANewGame = (playerOneObj, playerOneInput, playerTwoObj, playerTwoInput, startingPlayer, isThereAGameOver, formBtn) => {
+        // clears the game board grid by resetting it to an empty 2D array
         for (let i = 0; i < gameBoard.grid.length; i++) {    
             gameBoard.grid[i] = [[], [], []];
         }
+        // reset variables
+        playerOneObj = "";
+        playerOneInput.value = "";
+        playerTwoObj = "";
+        playerTwoInput.value = "";
+        startingPlayer = "";
+        isThereAGameOver = false;
+        // enable player creation form submission
+        formBtn.removeAttribute("disabled");
     };
     // creates a new player obj with a name, mark, and method to add a mark to the game board grid
     const createNewPlayer = (selectedName, selectedMark) => {
@@ -145,8 +155,8 @@ const gameLogicController = (function() {
     // declares the winning player
     const announceGameWinner = (activePlayer) => `Tic-tac-tover! ${activePlayer} wins the round!`;
 
-    return { 
-        clearGameBoardGrid,
+    return {
+        beginANewGame,
         createNewPlayer,
         setStartingPlayer,
         getActivePlayer,
@@ -174,7 +184,7 @@ const gameDisplayController = (function() {
     let playerOne;
     let playerTwo;
     let startingPlayer;
-    let isThereAGameOver;
+    let isThereAGameOver = false;
     
     // renders game board based on 2D array state
     const renderGameBoard = () => {
@@ -220,14 +230,14 @@ const gameDisplayController = (function() {
 
         if (isThereAGameOver) {
             event.currentTarget.removeEventListener("click", playAGame);
+            gameLogicController.beginANewGame(playerOne, playerOneNameInput, playerTwo, playerTwoNameInput, startingPlayer, isThereAGameOver, playerCreationSubmitBtn);
         }
     }
 
     playerCreationSubmitBtn.addEventListener("click", (event) => {
         event.preventDefault();
         playerCreationSubmitBtn.setAttribute("disabled", "");
-
-        gameLogicController.clearGameBoardGrid();
+        renderGameBoard();
 
         playerOne = createPlayersFromForm()["playerOne"];
         playerTwo = createPlayersFromForm()["playerTwo"];
