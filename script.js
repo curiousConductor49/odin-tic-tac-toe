@@ -21,7 +21,7 @@ const gameLogicController = (function() {
     // creates a new player obj with a name, mark, and method to add a mark to the game board grid
     const createNewPlayer = (selectedName, selectedMark) => {
         const playerName = selectedName;
-        const playerMark = selectedMark.toUpperCase();
+        const playerMark = selectedMark;
 
         const setPlayerMark = (rowIndex, colIndex, playerMark) => gameBoard.setGridSpaceVal(rowIndex, colIndex, playerMark);
 
@@ -166,10 +166,9 @@ const gameDisplayController = (function() {
     
     // player form controls
     const playerOneNameInput = document.querySelector("#player-one-name");
-    const playerOneMarkInput = document.querySelector("#player-one-mark");
+    // const playerOneMarkInput = document.querySelector("#player-one-mark");
     const playerTwoNameInput = document.querySelector("#player-two-name");
-    const playerTwoMarkInput = document.querySelector("#player-two-mark");
-    const markInputReminder = document.querySelector("#mark-input-reminder");
+    // const playerTwoMarkInput = document.querySelector("#player-two-mark");
     const playerCreationSubmitBtn = document.querySelector("#submit-btn");
     // variables to store player objects
     let playerOne;
@@ -189,16 +188,10 @@ const gameDisplayController = (function() {
     }    
     
     const createPlayersFromForm = () => {
-        if (playerOneMarkInput.value === playerTwoMarkInput.value) {
-            markInputReminder.textContent = "Players must have different marks!";
-        } else {
-            markInputReminder.textContent = "";
+        const playerOne = gameLogicController.createNewPlayer(playerOneNameInput.value, "X");
+        const playerTwo = gameLogicController.createNewPlayer(playerTwoNameInput.value, "O");
 
-            const playerOne = gameLogicController.createNewPlayer(playerOneNameInput.value, playerOneMarkInput.value);
-            const playerTwo = gameLogicController.createNewPlayer(playerTwoNameInput.value, playerTwoMarkInput.value);
-
-            return { playerOne, playerTwo };
-        }
+        return { playerOne, playerTwo };
     }
 
     const playAGame = (event) => {
@@ -238,6 +231,6 @@ const gameDisplayController = (function() {
     gameBoardDisplay.addEventListener("click", (event) => playAGame(event))
 })()
 
-// pseudocode!!
-// CURRENT OBJECTIVE --> test and debug the gameplay loop, currently at how we detect a win or tie
-// if a tie or win is found, then end the game round and enable the play button + form inputs again, allowing the process to repeat upon a click
+// 5.0 CHECKLIST
+// Allow players to re/start a game via a button <-- CURRENT OBJECTIVE
+// Convey necessary info (whose turn it is, who won)
