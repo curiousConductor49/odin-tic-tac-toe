@@ -175,6 +175,7 @@ const gameDisplayController = (function() {
     let playerOne;
     let playerTwo;
     let startingPlayer;
+    let isThereAGameOver;
     
     // renders game board based on 2D array state
     const renderGameBoard = () => {
@@ -200,6 +201,31 @@ const gameDisplayController = (function() {
         }
     }
 
+    const playAGame = (event) => {
+        // determine the active player
+        const activePlayer = gameLogicController.getActivePlayer(playerOne, playerTwo, startingPlayer);
+        // update the 2D array grid with the active player's mark and set it as the textContent of the click target
+        event.target.textContent = gameLogicController.setActivePlayerMark(playerOne, playerTwo, startingPlayer, event.target.dataset.row, event.target.dataset.col);
+        // use the state of the 2D array grid to render the game board
+        renderGameBoard();
+        console.log(gameBoard.grid);
+        // check for a win or a tie
+        isThereAGameOver = gameLogicController.checkForAGameWin("horizontal", activePlayer);
+        if (isThereAGameOver) {
+            // announce a win (horizontal)
+            gameLogicController.announceGameWinner(activePlayer);
+        } else {
+            isThereAGameOver = gameLogicController.checkForAGameWin("vertical", activePlayer);
+            if (isThereAGameOver) {
+                // announce a win (vertical)
+                gameLogicController.announceGameWinner(activePlayer);
+            } else {
+                // check for and announce a tie (no other possibility)
+                isThereAGameOver = gameLogicController.checkForAGameTie();
+            }
+        }
+    }
+
     playerCreationSubmitBtn.addEventListener("click", (event) => {
         event.preventDefault();
         gameLogicController.clearGameBoardGrid();
@@ -209,22 +235,7 @@ const gameDisplayController = (function() {
         console.log(playerOne, playerTwo, startingPlayer);
     });
 
-    gameBoardDisplay.addEventListener("click", (event) => {
-        // determine the active player
-        const activePlayer = gameLogicController.getActivePlayer(playerOne, playerTwo, startingPlayer);
-        // update the 2D array grid and set active player's mark as the textContent of the click target
-        event.target.textContent = gameLogicController.setActivePlayerMark(playerOne, playerTwo, startingPlayer, event.target.dataset.row, event.target.dataset.col);
-        // use the state of the 2D array grid to render the game board
-        renderGameBoard();
-        console.log(gameBoard.grid);
-        // check for a win or a tie
-        if (gameLogicController.checkForAGameWin("horizontal", activePlayer) === false) {
-            gameLogicController.checkForAGameWin("vertical", activePlayer);
-        }
-        if (gameLogicController.checkForAGameWin("horizontal", activePlayer) === false && gameLogicController.checkForAGameWin("vertical", activePlayer) === false) {
-            gameLogicController.checkForAGameTie();
-        }
-    })
+    gameBoardDisplay.addEventListener("click", (event) => playAGame(event))
 })()
 
 // pseudocode!!
