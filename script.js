@@ -176,6 +176,7 @@ const gameDisplayController = (function() {
     // console.log(gameBoardSpaces);
     
     // player form controls
+    const playerCreationForm = document.querySelector("#player-creation-form");
     const playerOneNameInput = document.querySelector("#player-one-name");
     // const playerOneMarkInput = document.querySelector("#player-one-mark");
     const playerTwoNameInput = document.querySelector("#player-two-name");
@@ -228,7 +229,7 @@ const gameDisplayController = (function() {
         }
     }
 
-    playerCreationSubmitBtn.addEventListener("click", (event) => {
+    playerCreationForm.addEventListener("submit", (event) => {
         event.preventDefault();
         playerCreationSubmitBtn.setAttribute("disabled", "");
         renderGameBoard();
@@ -246,7 +247,7 @@ const gameDisplayController = (function() {
 })()
 
 // FINAL CHECKLIST
-// CURRENT OBJECTIVE --> Debug so gameplay loop is smooth (ensure proper player is announced when it's their turn)
+// CURRENT OBJECTIVE --> Debug so gameplay loop is smooth (ensure player creation form has the names be required input)
 // Add a paragraph to notify players when a space is already taken
 // Clean up comments and console.logs
 // Ensure variable and function names are sound
