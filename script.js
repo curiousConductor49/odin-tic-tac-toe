@@ -71,12 +71,8 @@ const gameLogicController = (function() {
     // adds the mark of the active player to the game board grid
     const setActivePlayerMark = (firstPlayer, secondPlayer, startingPlayer, rowIndex, colIndex) => {
         const currentPlayer = getActivePlayer(firstPlayer, secondPlayer, startingPlayer);
-        if (gameBoard.grid[rowIndex][colIndex].length > 0) {
-            console.log("Sorry, space is taken!");
-            // have a paragraph whose textContent is populated with a message informing the players the space is already taken
-        } else {
-            currentPlayer.setPlayerMark(rowIndex, colIndex, currentPlayer.playerMark);
-        }
+       
+        currentPlayer.setPlayerMark(rowIndex, colIndex, currentPlayer.playerMark);
     };
     // checks for a game win in four directions: horizontal win, vertical win, and two diagonals
     // call w/ horizontal parameter first, then w/ vertical if a winner hasn't been found
@@ -210,22 +206,27 @@ const gameDisplayController = (function() {
         const playerToBeAnnounced = gameLogicController.getActivePlayer(playerOne, playerTwo, startingPlayer) === playerOne ? playerTwo : playerOne;
         // determine the active player
         const activePlayer = gameLogicController.getActivePlayer(playerOne, playerTwo, startingPlayer);
-        // update the display message
-        displayMessage.textContent = `Player ${playerToBeAnnounced.playerName}'s turn`;
-        // update the 2D array grid with the active player's mark and set it as the textContent of the click target
-        event.target.textContent = gameLogicController.setActivePlayerMark(playerOne, playerTwo, startingPlayer, event.target.dataset.row, event.target.dataset.col);
-        // use the state of the 2D array grid to render the game board
-        renderGameBoard();
-        console.log(gameBoard.grid);
-        // check for a win or a tie
-        if (gameLogicController.checkForAGameWin("horizontal", activePlayer) || gameLogicController.checkForAGameWin("vertical", activePlayer)) {
-            // announce a win (horizontal or vertical)
-            displayMessage.textContent = gameLogicController.announceGameWinner(activePlayer);
-            gameLogicController.beginANewGame(playerOne, playerOneNameInput, playerTwo, playerTwoNameInput, startingPlayer, playerCreationSubmitBtn);
-        } else if (gameLogicController.checkForAGameWin("horizontal", activePlayer) === false && gameLogicController.checkForAGameWin("vertical", activePlayer) === false && gameLogicController.checkForAGameTie()) {
-            // announce a tie (no other possibility)
-            displayMessage.textContent = "It's a tie! Neither player wins!";
-            gameLogicController.beginANewGame(playerOne, playerOneNameInput, playerTwo, playerTwoNameInput, startingPlayer, playerCreationSubmitBtn);
+
+        if (gameBoard.grid[event.target.dataset.row][event.target.dataset.col].length !== 0) {
+            displayMessage.textContent = "Sorry, that space is taken!";
+        } else {
+            // update the display message
+            displayMessage.textContent = `Player ${playerToBeAnnounced.playerName}'s turn`;
+             // update the 2D array grid with the active player's mark and set it as the textContent of the click target
+            event.target.textContent = gameLogicController.setActivePlayerMark(playerOne, playerTwo, startingPlayer, event.target.dataset.row, event.target.dataset.col);
+            // use the state of the 2D array grid to render the game board
+            renderGameBoard();
+            console.log(gameBoard.grid);
+            // check for a win or a tie
+            if (gameLogicController.checkForAGameWin("horizontal", activePlayer) || gameLogicController.checkForAGameWin("vertical", activePlayer)) {
+                // announce a win (horizontal or vertical)
+                displayMessage.textContent = gameLogicController.announceGameWinner(activePlayer);
+                gameLogicController.beginANewGame(playerOne, playerOneNameInput, playerTwo, playerTwoNameInput, startingPlayer, playerCreationSubmitBtn);
+            } else if (gameLogicController.checkForAGameWin("horizontal", activePlayer) === false && gameLogicController.checkForAGameWin("vertical", activePlayer) === false && gameLogicController.checkForAGameTie()) {
+                // announce a tie (no other possibility)
+                displayMessage.textContent = "It's a tie! Neither player wins!";
+                gameLogicController.beginANewGame(playerOne, playerOneNameInput, playerTwo, playerTwoNameInput, startingPlayer, playerCreationSubmitBtn);
+            }
         }
     }
 
@@ -247,8 +248,7 @@ const gameDisplayController = (function() {
 })()
 
 // FINAL CHECKLIST
-// CURRENT OBJECTIVE --> Debug so gameplay loop is smooth (ensure player creation form has the names be required input)
-// Add a paragraph to notify players when a space is already taken
+// CURRENT OBJECTIVE --> Add a paragraph to notify players when a space is already taken
 // Clean up comments and console.logs
 // Ensure variable and function names are sound
 // Look for ways to refactor or reorganize
