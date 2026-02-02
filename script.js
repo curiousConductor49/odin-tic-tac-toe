@@ -205,10 +205,12 @@ const gameDisplayController = (function() {
     }
 
     const playAGame = (event) => {
+        // determine player whose turn is upcoming
+        const playerToBeAnnounced = gameLogicController.getActivePlayer(playerOne, playerTwo, startingPlayer) === playerOne ? playerTwo : playerOne;
         // determine the active player
         const activePlayer = gameLogicController.getActivePlayer(playerOne, playerTwo, startingPlayer);
         // update the display message
-        displayMessage.textContent = `Player ${activePlayer.playerName}'s turn`;
+        displayMessage.textContent = `Player ${playerToBeAnnounced.playerName}'s turn`;
         // update the 2D array grid with the active player's mark and set it as the textContent of the click target
         event.target.textContent = gameLogicController.setActivePlayerMark(playerOne, playerTwo, startingPlayer, event.target.dataset.row, event.target.dataset.col);
         // use the state of the 2D array grid to render the game board
@@ -234,6 +236,8 @@ const gameDisplayController = (function() {
         playerOne = createPlayersFromForm()["playerOne"];
         playerTwo = createPlayersFromForm()["playerTwo"];
         startingPlayer = gameLogicController.setStartingPlayer(playerOne, playerTwo);
+
+        displayMessage.textContent = `Player ${startingPlayer.playerName}'s turn`;
 
         console.log(playerOne, playerTwo, startingPlayer);
 
