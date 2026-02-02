@@ -13,18 +13,18 @@ const gameBoard = (function() {
 
 const gameLogicController = (function() {
     // begins a new game round
-    const beginANewGame = (playerOneObj, playerOneInput, playerTwoObj, playerTwoInput, startingPlayer, isThereAGameOver, formBtn) => {
+    const beginANewGame = (player1, player1Name, player2, player2Name, starter, formBtn) => {
         // clears the game board grid by resetting it to an empty 2D array
         for (let i = 0; i < gameBoard.grid.length; i++) {    
             gameBoard.grid[i] = [[], [], []];
         }
         // reset variables
-        playerOneObj = "";
-        playerOneInput.value = "";
-        playerTwoObj = "";
-        playerTwoInput.value = "";
-        startingPlayer = "";
-        isThereAGameOver = false;
+        player1 = {};
+        player1Name.value = "";
+        player2 = {};
+        player2Name.value = "";
+        starter = "";
+        gameState = false;
         // enable player creation form submission
         formBtn.removeAttribute("disabled");
     };
@@ -185,7 +185,6 @@ const gameDisplayController = (function() {
     let playerOne;
     let playerTwo;
     let startingPlayer;
-    let isThereAGameOver = false;
     
     // renders game board based on 2D array state
     const renderGameBoard = () => {
@@ -218,18 +217,12 @@ const gameDisplayController = (function() {
         // check for a win or a tie
         if (gameLogicController.checkForAGameWin("horizontal", activePlayer) || gameLogicController.checkForAGameWin("vertical", activePlayer)) {
             // announce a win (horizontal or vertical)
-            console.log("nanabear");
             displayMessage.textContent = gameLogicController.announceGameWinner(activePlayer);
-            isThereAGameOver = true;
+            gameLogicController.beginANewGame(playerOne, playerOneNameInput, playerTwo, playerTwoNameInput, startingPlayer, playerCreationSubmitBtn);
         } else if (gameLogicController.checkForAGameWin("horizontal", activePlayer) === false && gameLogicController.checkForAGameWin("vertical", activePlayer) === false && gameLogicController.checkForAGameTie()) {
             // announce a tie (no other possibility)
             displayMessage.textContent = "It's a tie! Neither player wins!";
-            isThereAGameOver = true;
-        }
-
-        if (isThereAGameOver) {
-            event.currentTarget.removeEventListener("click", playAGame);
-            gameLogicController.beginANewGame(playerOne, playerOneNameInput, playerTwo, playerTwoNameInput, startingPlayer, isThereAGameOver, playerCreationSubmitBtn);
+            gameLogicController.beginANewGame(playerOne, playerOneNameInput, playerTwo, playerTwoNameInput, startingPlayer, playerCreationSubmitBtn);
         }
     }
 
@@ -244,12 +237,13 @@ const gameDisplayController = (function() {
 
         console.log(playerOne, playerTwo, startingPlayer);
 
-        gameBoardDisplay.addEventListener("click", playAGame);
+        gameBoardDisplay.addEventListener("click", playAGame);    
     });
 })()
 
 // FINAL CHECKLIST
-// CURRENT OBJECTIVE --> Debug so gameplay loop is smooth (back-to-back games have a problem with the game board event listener, form inputs aren't working w/ the required attribute)
+// CURRENT OBJECTIVE --> Debug so gameplay loop is smooth (ensure proper player is announced when it's their turn)
+// Add a paragraph to notify players when a space is already taken
 // Clean up comments and console.logs
 // Ensure variable and function names are sound
 // Look for ways to refactor or reorganize
