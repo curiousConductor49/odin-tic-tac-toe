@@ -24,7 +24,6 @@ const gameLogicController = (function() {
         player2 = {};
         player2Name.value = "";
         starter = "";
-        gameState = false;
         // enable player creation form submission
         formBtn.removeAttribute("disabled");
     };
@@ -42,7 +41,7 @@ const gameLogicController = (function() {
         const players = [firstPlayer, secondPlayer];
         const randomIndex = Math.floor(Math.random() * 2);
         const startingPlayer = players[randomIndex];
-        // should convey at start of game who's the starting player, and during turns, whose turn it is
+
         return startingPlayer;
     }
     // determines the active player by checking whose turn it is via the starting player and the turn number (even or odd) thereafter
@@ -61,11 +60,9 @@ const gameLogicController = (function() {
 
         if (currentTurnNum === 1) {
             return startingPlayer;
-            // console.log(startingPlayer);
         } else {
             const nonStartingPlayer = startingPlayer === firstPlayer ? secondPlayer : firstPlayer;
             return currentTurnNum % 2 === 0 ? nonStartingPlayer : startingPlayer;
-            // currentTurnNum % 2 === 0 ? console.log(nonStartingPlayer) : console.log(startingPlayer);
         }        
     };
     // adds the mark of the active player to the game board grid
@@ -75,7 +72,6 @@ const gameLogicController = (function() {
         currentPlayer.setPlayerMark(rowIndex, colIndex, currentPlayer.playerMark);
     };
     // checks for a game win in four directions: horizontal win, vertical win, and two diagonals
-    // call w/ horizontal parameter first, then w/ vertical if a winner hasn't been found
     const checkForAGameWin = (loopDirection, activePlayer) => {
         let consecutiveMarks = [];
         let isThereAGameWin = false;
@@ -92,7 +88,6 @@ const gameLogicController = (function() {
 
             if (consecutiveMarks.every((mark) => mark === activePlayer.playerMark)) {
                 isThereAGameWin = true;
-                console.log(`Player ${activePlayer.playerName} has won!`);
                 return isThereAGameWin;
             } else {
                 consecutiveMarks = [];
@@ -102,17 +97,16 @@ const gameLogicController = (function() {
 
         // diagonal win check
         if (isThereAGameWin === false) {
-            // uppermost left to lowermost right
+            // uppermost left space to lowermost right space
             consecutiveMarks.push((gameBoard.getGridSpaceVal(0, 0).length === 0 ? null : gameBoard.getGridSpaceVal(0, 0)[0]));
             consecutiveMarks.push((gameBoard.getGridSpaceVal(1, 1).length === 0 ? null : gameBoard.getGridSpaceVal(1, 1)[0]));
             consecutiveMarks.push((gameBoard.getGridSpaceVal(2, 2).length === 0 ? null : gameBoard.getGridSpaceVal(2, 2)[0]));
 
             if (consecutiveMarks.every((mark) => mark === activePlayer.playerMark)) {
                 isThereAGameWin = true;
-                console.log(`Player ${activePlayer.playerName} has won!`);
                 return isThereAGameWin;
             } else {
-                // uppermost right to bottommost left
+                // uppermost right space to bottommost left space
                 consecutiveMarks = [];
                 consecutiveMarks.push((gameBoard.getGridSpaceVal(0, 2).length === 0 ? null : gameBoard.getGridSpaceVal(0, 2)[0]));
                 consecutiveMarks.push((gameBoard.getGridSpaceVal(1, 1).length === 0 ? null : gameBoard.getGridSpaceVal(1, 1)[0]));
@@ -120,8 +114,6 @@ const gameLogicController = (function() {
 
                 if (consecutiveMarks.every((mark) => mark === activePlayer.playerMark)) {
                     isThereAGameWin = true;
-                    console.log(`Player ${activePlayer.playerName} has won!`);
-                    // console.log(consecutiveMarks);
                     return isThereAGameWin;
                 } else {
                     return isThereAGameWin;
@@ -141,7 +133,6 @@ const gameLogicController = (function() {
         }
 
         if (currentGridValues.length === 9) {
-            console.log("It's a tie! Neither player wins!");
             isThereAGameTie = true;
             return isThereAGameTie;
         } else {
@@ -168,16 +159,13 @@ const gameDisplayController = (function() {
     const gameBoardDisplay = document.querySelector("#game-board-display");
     const gameBoardSpaces = [...document.querySelectorAll(".game-board-space")];
     const displayMessage = document.querySelector("#display-message");
-
-    // console.log(gameBoardSpaces);
     
     // player form controls
     const playerCreationForm = document.querySelector("#player-creation-form");
     const playerOneNameInput = document.querySelector("#player-one-name");
-    // const playerOneMarkInput = document.querySelector("#player-one-mark");
     const playerTwoNameInput = document.querySelector("#player-two-name");
-    // const playerTwoMarkInput = document.querySelector("#player-two-mark");
     const playerCreationSubmitBtn = document.querySelector("#submit-btn");
+
     // variables to store player objects
     let playerOne;
     let playerTwo;
@@ -187,12 +175,11 @@ const gameDisplayController = (function() {
     const renderGameBoard = () => {
         for (let outerLoopIndex = 0; outerLoopIndex < gameBoard.grid.length; outerLoopIndex++) {    
             for (let innerLoopIndex = 0; innerLoopIndex < gameBoard.grid[outerLoopIndex].length; innerLoopIndex++) {
-                const currentGameBoardSpace = gameBoardSpaces.find((space) => parseInt(space.dataset.row) === outerLoopIndex && parseInt(space.dataset.col) === innerLoopIndex);
-                // console.log(currentGameBoardSpace);
+                const currentGameBoardSpace = gameBoardSpaces.find((boardSpace) => parseInt(boardSpace.dataset.row) === outerLoopIndex && parseInt(boardSpace.dataset.col) === innerLoopIndex);
                 currentGameBoardSpace.textContent = gameBoard.grid[outerLoopIndex][innerLoopIndex][0];
             }
         }
-    }    
+    }
     
     const createPlayersFromForm = () => {
         const playerOne = gameLogicController.createNewPlayer(playerOneNameInput.value, "X");
@@ -212,18 +199,20 @@ const gameDisplayController = (function() {
         } else {
             // update the display message
             displayMessage.textContent = `Player ${playerToBeAnnounced.playerName}'s turn`;
-             // update the 2D array grid with the active player's mark and set it as the textContent of the click target
+
+            // update the 2D array grid with the active player's mark and set it as the textContent of the click target
             event.target.textContent = gameLogicController.setActivePlayerMark(playerOne, playerTwo, startingPlayer, event.target.dataset.row, event.target.dataset.col);
+
             // use the state of the 2D array grid to render the game board
             renderGameBoard();
-            console.log(gameBoard.grid);
+            
             // check for a win or a tie
             if (gameLogicController.checkForAGameWin("horizontal", activePlayer) || gameLogicController.checkForAGameWin("vertical", activePlayer)) {
-                // announce a win (horizontal or vertical)
+                // announce a win (horizontal or vertical) and clear game state
                 displayMessage.textContent = gameLogicController.announceGameWinner(activePlayer);
                 gameLogicController.beginANewGame(playerOne, playerOneNameInput, playerTwo, playerTwoNameInput, startingPlayer, playerCreationSubmitBtn);
             } else if (gameLogicController.checkForAGameWin("horizontal", activePlayer) === false && gameLogicController.checkForAGameWin("vertical", activePlayer) === false && gameLogicController.checkForAGameTie()) {
-                // announce a tie (no other possibility)
+                // announce a tie and clear game state
                 displayMessage.textContent = "It's a tie! Neither player wins!";
                 gameLogicController.beginANewGame(playerOne, playerOneNameInput, playerTwo, playerTwoNameInput, startingPlayer, playerCreationSubmitBtn);
             }
@@ -231,25 +220,24 @@ const gameDisplayController = (function() {
     }
 
     playerCreationForm.addEventListener("submit", (event) => {
+        // prevent default form submission and players from further interacting with form
         event.preventDefault();
         playerCreationSubmitBtn.setAttribute("disabled", "");
         renderGameBoard();
 
+        // assign player objects
         playerOne = createPlayersFromForm()["playerOne"];
         playerTwo = createPlayersFromForm()["playerTwo"];
         startingPlayer = gameLogicController.setStartingPlayer(playerOne, playerTwo);
-
+        // convey starting player's turn
         displayMessage.textContent = `Player ${startingPlayer.playerName}'s turn`;
-
-        console.log(playerOne, playerTwo, startingPlayer);
 
         gameBoardDisplay.addEventListener("click", playAGame);    
     });
 })()
 
 // FINAL CHECKLIST
-// CURRENT OBJECTIVE --> Add a paragraph to notify players when a space is already taken
-// Clean up comments and console.logs
+// CURRENT OBJECTIVE --> Clean up comments and console.logs
 // Ensure variable and function names are sound
 // Look for ways to refactor or reorganize
 // Style w/ CSS
