@@ -54,13 +54,7 @@ h1 {
     align-items: center;
 }
 
-.player-one-creation .player-mark {
-    color: #2780F5;
-    font-size: 1.45rem;
-}
-
-.player-two-creation .player-mark {
-    color: #E33B32;
+.player-mark {
     font-size: 1.45rem;
 }
 
