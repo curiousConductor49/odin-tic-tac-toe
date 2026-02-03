@@ -108,7 +108,14 @@ input[type="text"] {
     color: #f1f1f1;
 }
 
-/* #display-message {} */
+
+#display-message {
+    text-align: center;
+    margin-block: 20px;
+    font-family: 'Lato', Verdana, Geneva, Tahoma, sans-serif;
+    font-style: italic;
+    font-size: 1.75rem;
+}
 
 .game-container {
     margin-block: 40px;
