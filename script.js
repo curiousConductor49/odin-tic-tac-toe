@@ -155,7 +155,7 @@ const gameDisplayController = (function() {
     const gameBoardSpaces = [...document.querySelectorAll(".game-board-space")];
     const displayMessage = document.querySelector("#display-message");
     
-    // player form controls
+    // player creation form DOM elements
     const playerCreationForm = document.querySelector("#player-creation-form");
     const playerOneNameInput = document.querySelector("#player-one-name");
     const playerTwoNameInput = document.querySelector("#player-two-name");
