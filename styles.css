@@ -133,7 +133,9 @@ input[type="text"] {
 .game-board-space  {
     height: 100px;
     width: 100px;
+    margin: 5px;
     border: 2px solid #2b2b2b;
+    border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
