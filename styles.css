@@ -12,10 +12,15 @@ game board outline: #000
     box-sizing: border-box;
 }
 
+body {
+    background-color: #f1f1f1;
+}
+
 h1 {
     text-align: center;
     margin-inline: 20px;
     margin-block: 40px;
+    font-family: 'Playwrite NZ Basic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 #player-creation-form {
