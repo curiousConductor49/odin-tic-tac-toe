@@ -137,8 +137,6 @@ const gameLogicController = (function() {
             return isThereAGameTie;
         }
     };
-    // declares the winning player
-    const announceGameWinner = (activePlayer) => `Tic-tac-tover! ${activePlayer.playerName} wins the round!`;
 
     return {
         clearGameState,
@@ -148,7 +146,6 @@ const gameLogicController = (function() {
         setActivePlayerMark,
         checkForAGameWin,
         checkForAGameTie,
-        announceGameWinner,
     };
 })()
 
@@ -207,7 +204,7 @@ const gameDisplayController = (function() {
             // check for a win or a tie
             if (gameLogicController.checkForAGameWin("horizontal", activePlayer) || gameLogicController.checkForAGameWin("vertical", activePlayer)) {
                 // announce a win (horizontal or vertical) and clear game state
-                displayMessage.textContent = gameLogicController.announceGameWinner(activePlayer);
+                displayMessage.textContent = `Tic-tac-tover! ${activePlayer.playerName} wins the round!`;
                 gameLogicController.clearGameState(playerOneNameInput, playerTwoNameInput, startingPlayer, playerCreationSubmitBtn);
             } else if (gameLogicController.checkForAGameWin("horizontal", activePlayer) === false && gameLogicController.checkForAGameWin("vertical", activePlayer) === false && gameLogicController.checkForAGameTie()) {
                 // announce a tie and clear game state
