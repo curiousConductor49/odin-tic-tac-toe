@@ -233,8 +233,14 @@ const gameDisplayController = (function() {
         playerOne = createPlayersFromForm()["playerOne"];
         playerTwo = createPlayersFromForm()["playerTwo"];
         startingPlayer = gameLogicController.setStartingPlayer(playerOne, playerTwo);
+
         // convey starting player's turn
         turnDisplayMessage.textContent = `Player ${startingPlayer.playerName}'s turn`;
+
+        // indicate to players they can add marks
+        for (const boardSpace of gameBoardSpaces) {
+            boardSpace.style.cursor = "pointer";
+        }
 
         gameBoardDisplay.addEventListener("click", playAGame);    
     });
