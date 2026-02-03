@@ -125,7 +125,6 @@ input[type="text"] {
     max-width: fit-content;
     margin-inline: auto;
     padding: 10px;
-    border: 2px solid slateblue;
     display: grid;
     grid-template-rows: repeat(3, 1fr);
     grid-template-columns: repeat(3, 1fr);
@@ -134,7 +133,7 @@ input[type="text"] {
 .game-board-space  {
     height: 100px;
     width: 100px;
-    border: 2px solid plum;
+    border: 2px solid #2b2b2b;
     display: flex;
     justify-content: center;
     align-items: center;
