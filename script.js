@@ -233,6 +233,5 @@ const gameDisplayController = (function() {
 })()
 
 // FINAL CHECKLIST
-// CURRENT OBJECTIVE --> ensure variable and function names are sound + look for ways to refactor or reorganize
-// Style w/ CSS
+// CURRENT OBJECTIVE --> style w/ CSS
 // Update README
