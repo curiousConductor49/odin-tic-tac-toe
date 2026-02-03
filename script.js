@@ -13,14 +13,14 @@ const gameBoard = (function() {
 
 const gameLogicController = (function() {
     // begins a new game round
-    const clearGameState = (player1Name, player2Name, formBtn) => {
+    const clearGameState = (playerOneName, playerTwoName, formBtn) => {
         // clears the game board grid by resetting it to an empty 2D array
         for (let i = 0; i < gameBoard.grid.length; i++) {    
             gameBoard.grid[i] = [[], [], []];
         }
-        // reset variables
-        player1Name.value = "";
-        player2Name.value = "";
+        // reset player form inputs
+        playerOneName.value = "";
+        playerTwoName.value = "";
         // enable player creation form submission
         formBtn.removeAttribute("disabled");
     };
