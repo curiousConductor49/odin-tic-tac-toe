@@ -18,32 +18,34 @@ h1 {
     margin-block: 40px;
 }
 
-.player-creation-container form {
+#player-creation-form {
     max-width: fit-content;
     margin-inline: auto;
     border: 2px solid goldenrod;
 }
 
-.player-creation-container form * {
+#player-creation-form * {
     margin: 10px;
     padding: 5px;
 }
 
-/* .player-one-creation {} */
+/* .player-one-creation {}
 
-/* #player-one-name {} */
+.player-two-creation {}
 
-/* #player-two-name {} */
+label {}
 
-/* #player-one-mark {} */
+.player-mark {}
 
-/* #player-two-mark {} */
+input[type="text"] {} */
 
 #submit-btn {
     display: block;
     max-width: fit-content;
     margin-inline: auto;
 }
+
+/* #display-message {} */
 
 .game-container {
     margin-block: 40px;
@@ -67,5 +69,3 @@ h1 {
     justify-content: center;
     align-items: center;
 }
-
-/* #endgame-message {} */
