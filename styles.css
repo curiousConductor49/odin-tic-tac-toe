@@ -8,6 +8,13 @@ body {
     background-color: #f1f1f1;
 }
 
+.playing-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
 h1 {
     text-align: center;
     margin-inline: 20px;

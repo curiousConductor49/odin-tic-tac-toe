@@ -13,50 +13,53 @@
     <h1>Tic-Tac-Toe</h1>
     <main>
 
-        <section class="player-creation-container">
-            <form id="player-creation-form">
-                <fieldset class="player-one-creation">
-                    <legend>Player One, select your name.</legend>
-                    <label for="player-one-name">
-                        Name:
-                        <input type="text" id="player-one-name" required />
-                    </label>
-                    <p id="player-one-mark">
-                        Mark: <span class="player-mark">X</span>
-                    </p>
-                </fieldset>
-                <fieldset class="player-two-creation">
-                    <legend>Player Two, select your name.</legend>
-                    <label for="player-two-name">
-                        Name:
-                        <input type="text" id="player-two-name" required />
-                    </label>
-                    <p id="player-two-mark">
-                        Mark: <span class="player-mark">O</span>
-                    </p>
-                </fieldset>
-                <button id="submit-btn" type="submit">Play</button>
-            </form>
-        </section>
+        <section class="playing-box">
+            <section class="player-creation-container">
+                <form id="player-creation-form">
+                    <fieldset class="player-one-creation">
+                        <legend>Player One, select your name.</legend>
+                        <label for="player-one-name">
+                            Name:
+                            <input type="text" id="player-one-name" required />
+                        </label>
+                        <p id="player-one-mark">
+                            Mark: <span class="player-mark">X</span>
+                        </p>
+                    </fieldset>
+                    <fieldset class="player-two-creation">
+                        <legend>Player Two, select your name.</legend>
+                        <label for="player-two-name">
+                            Name:
+                            <input type="text" id="player-two-name" required />
+                        </label>
+                        <p id="player-two-mark">
+                            Mark: <span class="player-mark">O</span>
+                        </p>
+                    </fieldset>
+                    <button id="submit-btn" type="submit">Play</button>
+                </form>
+            </section>
 
-        <section class="display-message-container">
-            <p id="game-turn-display-message" role="region" aria-live="polite"></p>
+            <section class="game-area">
+                <section class="display-message-container">
+                    <p id="game-turn-display-message" role="region" aria-live="polite"></p>
+                </section>
+                <section class="game-container">
+                    <div id="game-board-display">
+                         <button class="game-board-space" data-row="0" data-col="0"></button>
+                         <button class="game-board-space" data-row="0" data-col="1"></button>
+                         <button class="game-board-space" data-row="0" data-col="2"></button>
+                         <button class="game-board-space" data-row="1" data-col="0"></button>
+                         <button class="game-board-space" data-row="1" data-col="1"></button>
+                         <button class="game-board-space" data-row="1" data-col="2"></button>
+                         <button class="game-board-space" data-row="2" data-col="0"></button>
+                         <button class="game-board-space" data-row="2" data-col="1"></button>
+                         <button class="game-board-space" data-row="2" data-col="2"></button>
+                    </div>
+                </section>
+            </section>
         </section>
-
-        <section class="game-container">
-           <div id="game-board-display">
-                <button class="game-board-space" data-row="0" data-col="0"></button>
-                <button class="game-board-space" data-row="0" data-col="1"></button>
-                <button class="game-board-space" data-row="0" data-col="2"></button>
-                <button class="game-board-space" data-row="1" data-col="0"></button>
-                <button class="game-board-space" data-row="1" data-col="1"></button>
-                <button class="game-board-space" data-row="1" data-col="2"></button>
-                <button class="game-board-space" data-row="2" data-col="0"></button>
-                <button class="game-board-space" data-row="2" data-col="1"></button>
-                <button class="game-board-space" data-row="2" data-col="2"></button>
-           </div>
-        </section>
-
+        
     </main>
     <script src="script.js"></script>
 </body>
