@@ -129,4 +129,7 @@ input[type="text"] {
     display: flex;
     justify-content: center;
     align-items: center;
+    color: #f1f1f1;
+    font-family: 'Playwrite NZ Basic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.45rem;
 }

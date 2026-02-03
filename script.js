@@ -196,6 +196,7 @@ const gameDisplayController = (function() {
 
             // update the 2D array grid with the active player's mark and set it as the textContent of the click target
             event.target.textContent = gameLogicController.setActivePlayerMark(playerOne, playerTwo, startingPlayer, event.target.dataset.row, event.target.dataset.col);
+            event.target.style.backgroundColor = activePlayer === playerOne ? "#E33B32" : "#2780F5";
 
             // use the state of the 2D array grid to render the game board
             renderGameBoard();
@@ -216,6 +217,11 @@ const gameDisplayController = (function() {
     }
 
     playerCreationForm.addEventListener("submit", (event) => {
+        // resets game board space background colors
+        for (let j = 0; j < gameBoardSpaces.length; j++) {
+            gameBoardSpaces[j].style.backgroundColor = "#f1f1f1";
+        }
+
         // prevent default form submission and players from further interacting with form
         event.preventDefault();
         playerCreationSubmitBtn.setAttribute("disabled", "");
