@@ -26,8 +26,8 @@ h1 {
 #player-creation-form {
     max-width: fit-content;
     margin-inline: auto;
-    border: 3px solid #2b2b2b;
-    border-radius: 10px;
+    /* border: 3px solid #2b2b2b;
+    border-radius: 10px; */
     padding: 15px;
     font-family: 'Lato', Verdana, Geneva, Tahoma, sans-serif;
     font-size: 1.15rem;
@@ -35,19 +35,28 @@ h1 {
 
 #player-creation-form * {
     margin: 10px;
-    padding: 5px;
+}
+
+.player-one-creation, .player-two-creation {
+    border: 2px #2b2b2b solid;
+    border-radius: 5px;
+    padding: 15px;
 }
 
 .player-one-creation legend {
-    background-color: #000;
-    color: #2780F5;
-    padding: 5px;
+    background-color: #2780F5;
+    color: #f1f1f1;
+    padding: 15px;
+    font-family: 'Playwrite NZ Basic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-radius: 5px;
 }
 
 .player-two-creation legend {
-    background-color: #000;
-    color: #E33B32;
-    padding: 5px;
+    background-color: #E33B32;
+    color: #f1f1f1;
+    padding: 15px;
+    font-family: 'Playwrite NZ Basic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-radius: 5px;
 }
 
 #player-one-mark, #player-two-mark {
@@ -69,6 +78,7 @@ input[type="text"] {
     font-family: 'Lato', Verdana, Geneva, Tahoma, sans-serif;
     font-size: 1.15rem;
     background-color: #f1f1f1;
+    padding: 10px;
     border: none;
     border-bottom: 1px solid #2b2b2b;
 }
@@ -80,9 +90,21 @@ input[type="text"] {
     font-size: 1.35rem;
     margin-block-start: 20px;
     margin-inline: auto;
+    padding: 5px;
+    background-color: #f1f1f1;
+    color: #2b2b2b;
+    cursor: pointer;
+}
+
+#submit-btn:hover {
     background-color: #2b2b2b;
     color: #f1f1f1;
-    cursor: pointer;
+}
+
+#submit-btn[disabled] {
+    cursor: default;
+    background-color: #2b2b2b;
+    color: #f1f1f1;
 }
 
 /* #display-message {} */
