@@ -152,7 +152,7 @@ const gameDisplayController = (function() {
     // game board DOM elements
     const gameBoardDisplay = document.querySelector("#game-board-display");
     const gameBoardSpaces = [...document.querySelectorAll(".game-board-space")];
-    const displayMessage = document.querySelector("#display-message");
+    const turnDisplayMessage = document.querySelector("#game-turn-display-message");
     
     // player creation form DOM elements
     const playerCreationForm = document.querySelector("#player-creation-form");
@@ -189,10 +189,10 @@ const gameDisplayController = (function() {
         const activePlayer = gameLogicController.getActivePlayer(playerOne, playerTwo, startingPlayer);
 
         if (gameBoard.grid[event.target.dataset.row][event.target.dataset.col].length !== 0) {
-            displayMessage.textContent = "Sorry, that space is taken!";
+            turnDisplayMessage.textContent = "Sorry, that space is taken!";
         } else {
             // update the display message
-            displayMessage.textContent = `Player ${playerToBeAnnounced.playerName}'s turn`;
+            turnDisplayMessage.textContent = `Player ${playerToBeAnnounced.playerName}'s turn`;
 
             // update the 2D array grid with the active player's mark and set it as the textContent of the click target
             event.target.textContent = gameLogicController.setActivePlayerMark(playerOne, playerTwo, startingPlayer, event.target.dataset.row, event.target.dataset.col);
@@ -204,12 +204,12 @@ const gameDisplayController = (function() {
             // check for a win or a tie
             if (gameLogicController.checkForAGameWin("horizontal", activePlayer) || gameLogicController.checkForAGameWin("vertical", activePlayer)) {
                 // announce a win (horizontal or vertical) and clear game state
-                displayMessage.textContent = `Tic-tac-tover! ${activePlayer.playerName} wins the round!`;
+                turnDisplayMessage.textContent = `Tic-tac-toe-ver! ${activePlayer.playerName} wins the round!`;
                 // clear game state
                 gameLogicController.clearGameState(playerOneNameInput, playerTwoNameInput, playerCreationSubmitBtn);
             } else if (gameLogicController.checkForAGameWin("horizontal", activePlayer) === false && gameLogicController.checkForAGameWin("vertical", activePlayer) === false && gameLogicController.checkForAGameTie()) {
                 // announce a tie and clear game state
-                displayMessage.textContent = "It's a tie! Neither player wins!";
+                turnDisplayMessage.textContent = "It's a tie! Neither player wins!";
                 // clear game state
                 gameLogicController.clearGameState(playerOneNameInput, playerTwoNameInput, playerCreationSubmitBtn);
             }
@@ -232,7 +232,7 @@ const gameDisplayController = (function() {
         playerTwo = createPlayersFromForm()["playerTwo"];
         startingPlayer = gameLogicController.setStartingPlayer(playerOne, playerTwo);
         // convey starting player's turn
-        displayMessage.textContent = `Player ${startingPlayer.playerName}'s turn`;
+        turnDisplayMessage.textContent = `Player ${startingPlayer.playerName}'s turn`;
 
         gameBoardDisplay.addEventListener("click", playAGame);    
     });

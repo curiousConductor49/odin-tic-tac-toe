@@ -99,7 +99,7 @@ input[type="text"] {
 }
 
 
-#display-message {
+#game-turn-display-message {
     text-align: center;
     margin-block: 20px;
     font-family: 'Lato', Verdana, Geneva, Tahoma, sans-serif;
