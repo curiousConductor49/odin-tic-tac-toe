@@ -13,15 +13,13 @@ const gameBoard = (function() {
 
 const gameLogicController = (function() {
     // begins a new game round
-    const beginANewGame = (player1, player1Name, player2, player2Name, starter, formBtn) => {
+    const beginANewGame = (player1Name, player2Name, starter, formBtn) => {
         // clears the game board grid by resetting it to an empty 2D array
         for (let i = 0; i < gameBoard.grid.length; i++) {    
             gameBoard.grid[i] = [[], [], []];
         }
         // reset variables
-        player1 = {};
         player1Name.value = "";
-        player2 = {};
         player2Name.value = "";
         starter = "";
         // enable player creation form submission
@@ -210,11 +208,11 @@ const gameDisplayController = (function() {
             if (gameLogicController.checkForAGameWin("horizontal", activePlayer) || gameLogicController.checkForAGameWin("vertical", activePlayer)) {
                 // announce a win (horizontal or vertical) and clear game state
                 displayMessage.textContent = gameLogicController.announceGameWinner(activePlayer);
-                gameLogicController.beginANewGame(playerOne, playerOneNameInput, playerTwo, playerTwoNameInput, startingPlayer, playerCreationSubmitBtn);
+                gameLogicController.beginANewGame(playerOneNameInput, playerTwoNameInput, startingPlayer, playerCreationSubmitBtn);
             } else if (gameLogicController.checkForAGameWin("horizontal", activePlayer) === false && gameLogicController.checkForAGameWin("vertical", activePlayer) === false && gameLogicController.checkForAGameTie()) {
                 // announce a tie and clear game state
                 displayMessage.textContent = "It's a tie! Neither player wins!";
-                gameLogicController.beginANewGame(playerOne, playerOneNameInput, playerTwo, playerTwoNameInput, startingPlayer, playerCreationSubmitBtn);
+                gameLogicController.beginANewGame(playerOneNameInput, playerTwoNameInput, startingPlayer, playerCreationSubmitBtn);
             }
         }
     }
