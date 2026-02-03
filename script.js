@@ -13,7 +13,7 @@ const gameBoard = (function() {
 
 const gameLogicController = (function() {
     // begins a new game round
-    const clearGameState = (player1Name, player2Name, starter, formBtn) => {
+    const clearGameState = (player1Name, player2Name, formBtn) => {
         // clears the game board grid by resetting it to an empty 2D array
         for (let i = 0; i < gameBoard.grid.length; i++) {    
             gameBoard.grid[i] = [[], [], []];
@@ -21,7 +21,6 @@ const gameLogicController = (function() {
         // reset variables
         player1Name.value = "";
         player2Name.value = "";
-        starter = "";
         // enable player creation form submission
         formBtn.removeAttribute("disabled");
     };
@@ -205,11 +204,13 @@ const gameDisplayController = (function() {
             if (gameLogicController.checkForAGameWin("horizontal", activePlayer) || gameLogicController.checkForAGameWin("vertical", activePlayer)) {
                 // announce a win (horizontal or vertical) and clear game state
                 displayMessage.textContent = `Tic-tac-tover! ${activePlayer.playerName} wins the round!`;
-                gameLogicController.clearGameState(playerOneNameInput, playerTwoNameInput, startingPlayer, playerCreationSubmitBtn);
+                // clear game state
+                gameLogicController.clearGameState(playerOneNameInput, playerTwoNameInput, playerCreationSubmitBtn);
             } else if (gameLogicController.checkForAGameWin("horizontal", activePlayer) === false && gameLogicController.checkForAGameWin("vertical", activePlayer) === false && gameLogicController.checkForAGameTie()) {
                 // announce a tie and clear game state
                 displayMessage.textContent = "It's a tie! Neither player wins!";
-                gameLogicController.clearGameState(playerOneNameInput, playerTwoNameInput, startingPlayer, playerCreationSubmitBtn);
+                // clear game state
+                gameLogicController.clearGameState(playerOneNameInput, playerTwoNameInput, playerCreationSubmitBtn);
             }
         }
     }
