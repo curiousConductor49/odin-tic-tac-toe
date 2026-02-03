@@ -23,6 +23,7 @@ const gameLogicController = (function() {
         playerTwoName.value = "";
         // enable player creation form submission
         formBtn.removeAttribute("disabled");
+        formBtn.textContent = "Play";
     };
     // creates a new player obj with a name, mark, and method to add a mark to the game board grid
     const createNewPlayer = (selectedName, selectedMark) => {
@@ -225,6 +226,7 @@ const gameDisplayController = (function() {
         // prevent default form submission and players from further interacting with form
         event.preventDefault();
         playerCreationSubmitBtn.setAttribute("disabled", "");
+        playerCreationSubmitBtn.textContent = "Playing...";
         renderGameBoard();
 
         // assign player objects
