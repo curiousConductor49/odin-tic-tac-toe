@@ -9,4 +9,4 @@ A tic-tac-toe game made for The Odin Project, utilizing vanilla HTML, CSS, and J
 1. Clone the repo (SSH key): ```git@github.com:curiousConductor49/odin-tic-tac-toe.git```
 2. Use VSCode's live preview extension to run it locally in the browser!
 ## Live Site
-Visit the live site via GitHub Pages: [https://curiousconductor49.github.io/odin-tic-tac-toe/](https://curiousconductor49.github.io/odin-tic-tac-toe/)]
+Visit the live site via GitHub Pages: [https://curiousconductor49.github.io/odin-tic-tac-toe/](https://curiousconductor49.github.io/odin-tic-tac-toe/)
