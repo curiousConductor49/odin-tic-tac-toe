@@ -208,11 +208,15 @@ const gameDisplayController = (function() {
                 turnDisplayMessage.textContent = `Tic-tac-toe-ver! ${activePlayer.playerName} wins the round!`;
                 // clear game state
                 gameLogicController.clearGameState(playerOneNameInput, playerTwoNameInput, playerCreationSubmitBtn);
+                // remove event listener on game board
+                event.currentTarget.removeEventListener("click", playAGame);
             } else if (gameLogicController.checkForAGameWin("horizontal", activePlayer) === false && gameLogicController.checkForAGameWin("vertical", activePlayer) === false && gameLogicController.checkForAGameTie()) {
                 // announce a tie and clear game state
                 turnDisplayMessage.textContent = "It's a tie! Neither player wins!";
                 // clear game state
                 gameLogicController.clearGameState(playerOneNameInput, playerTwoNameInput, playerCreationSubmitBtn);
+                // remove event listener on game board
+                event.currentTarget.removeEventListener("click", playAGame);
             }
         }
     }
@@ -242,10 +246,10 @@ const gameDisplayController = (function() {
             boardSpace.style.cursor = "pointer";
         }
 
-        gameBoardDisplay.addEventListener("click", playAGame);    
+        gameBoardDisplay.addEventListener("click", playAGame);
     });
 })()
 
 // FINAL CHECKLIST
-// CURRENT OBJECTIVE --> style w/ CSS
+// CURRENT OBJECTIVE --> debug final problem (players can still add marks after end of game)
 // Update README
