@@ -94,11 +94,10 @@ input[type="text"] {
 }
 
 #submit-btn[disabled] {
-    cursor: default;
+    cursor: not-allowed;
     background-color: #2b2b2b;
     color: #f1f1f1;
 }
-
 
 #game-turn-display-message {
     text-align: center;
