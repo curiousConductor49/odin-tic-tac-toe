@@ -249,7 +249,3 @@ const gameDisplayController = (function() {
         gameBoardDisplay.addEventListener("click", playAGame);
     });
 })()
-
-// FINAL CHECKLIST
-// CURRENT OBJECTIVE --> debug final problem (players can still add marks after end of game)
-// Update README
