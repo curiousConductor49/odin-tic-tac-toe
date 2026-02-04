@@ -133,3 +133,10 @@ input[type="text"] {
     font-family: 'Playwrite NZ Basic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 1.45rem;
 }
+
+@media (max-width: 750px) {
+    .playing-box {
+        display: flex;
+        flex-direction: column;
+    }
+}
